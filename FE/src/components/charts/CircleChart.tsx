@@ -12,7 +12,7 @@ const ApplicationStatusChart = () => {
   ];
 
   return (
-    <div className="w-full h-80 bg-white rounded-lg shadow-sm border p-4">
+    <div className="w-full h-fit bg-white rounded-lg shadow-sm border p-4">
       <h3 className="text-lg font-semibold mb-4 text-gray-800">
         Application Status Distribution
       </h3>
