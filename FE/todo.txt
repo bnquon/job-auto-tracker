@@ -1,1 +1,1 @@
-think about the table format and cells
+make table cell components
