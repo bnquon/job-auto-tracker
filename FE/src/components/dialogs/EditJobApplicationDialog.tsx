@@ -20,8 +20,9 @@ import {
 } from "@/components/ui/select";
 import { useEffect } from "react";
 import type { ApplicationStatus } from "types/JobApplication";
-import type { EditJobApplication } from "../../../types/EditJobApplication"
-import { editJobApplicationSchema } from "../../../schemas/EditJobSchema"
+import type { EditJobApplication } from "../../../types/EditJobApplication";
+import { editJobApplicationSchema } from "../../../schemas/EditJobSchema";
+import { Textarea } from "../ui/textarea";
 
 interface EditJobApplicationDialogProps {
   open: boolean;
@@ -82,14 +83,17 @@ export function EditJobApplicationDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px]" onOpenAutoFocus={(e) => e.preventDefault( )}>
+      <DialogContent
+        className="sm:max-w-[425px]"
+        onOpenAutoFocus={(e) => e.preventDefault()}
+      >
         <DialogHeader>
           <DialogTitle>Edit Job Application</DialogTitle>
           <DialogDescription>
             Update the details for this job application.
           </DialogDescription>
         </DialogHeader>
-        
+
         <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4">
           <div className="grid gap-3">
             <Label htmlFor="company_name">Company Name</Label>
@@ -99,7 +103,9 @@ export function EditJobApplicationDialog({
               placeholder="Enter company name"
             />
             {errors.company_name && (
-              <p className="text-red-500 text-sm">{errors.company_name.message}</p>
+              <p className="text-red-500 text-sm">
+                {errors.company_name.message}
+              </p>
             )}
           </div>
 
@@ -120,7 +126,6 @@ export function EditJobApplicationDialog({
             <Input
               {...register("link")}
               id="link"
-              type="url"
               placeholder="https://..."
             />
             {errors.link && (
@@ -130,9 +135,11 @@ export function EditJobApplicationDialog({
 
           <div className="grid gap-3">
             <Label htmlFor="status">Status</Label>
-            <Select 
-              value={statusValue} 
-              onValueChange={(value) => setValue("status", value as ApplicationStatus)}
+            <Select
+              value={statusValue}
+              onValueChange={(value) =>
+                setValue("status", value as ApplicationStatus)
+              }
             >
               <SelectTrigger>
                 <SelectValue placeholder="Select a status" />
@@ -149,7 +156,19 @@ export function EditJobApplicationDialog({
               <p className="text-red-500 text-sm">{errors.status.message}</p>
             )}
           </div>
-          
+
+          <div className="grid gap-3">
+            <Label htmlFor="notes">Notes</Label>
+            <Textarea
+              {...register("notes")}
+              id="notes"
+              placeholder="Applied with a referral."
+            />
+            {errors.notes && (
+              <p className="text-red-500 text-sm">{errors.notes.message}</p>
+            )}
+          </div>
+
           <DialogFooter className="flex justify-between w-full">
             <Button type="button" variant="outline" onClick={handleCancel}>
               Cancel

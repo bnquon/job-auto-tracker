@@ -5,6 +5,7 @@ import { PageWrapper } from "@/components/wrappers/PageWrapper";
 import { TableWrapper } from "@/components/wrappers/TableWrapper";
 import { useApplications } from "@/hooks/useApplication";
 import { CountingHelper } from "../../helpers/CountingHelper";
+import { UploadWrapper } from "@/components/wrappers/UploadWrapper";
 
 export const JobDashboard = () => {
   const { data = [] } = useApplications();
@@ -25,7 +26,9 @@ export const JobDashboard = () => {
           <ApplicationsLineChart />
         </div>
       </div>
-      <div className="bg-green-200 w-1/4">forms and ss upload here</div>
+      <div className="flex flex-col w-1/4">
+        <UploadWrapper />
+      </div>
     </PageWrapper>
   );
 };

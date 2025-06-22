@@ -5,6 +5,8 @@ import DataGridDemo from "../JobApplicationsDataGrid";
 import { DeleteJobApplicationDialog } from "../dialogs/DeleteJobApplicationDialog";
 import { EditJobApplicationDialog } from "../dialogs/EditJobApplicationDialog";
 import type { EditJobApplication } from "types/EditJobApplication";
+import { useUpdateApplication } from "@/hooks/useUpdateApplication";
+import { useDeleteApplication } from "@/hooks/useDeleteApplication";
 
 interface ITableWrapper {
   data: ReceivedJobApplicationInfo[];
@@ -15,6 +17,9 @@ export const TableWrapper = ({ data }: ITableWrapper) => {
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [selectedApp, setSelectedApp] =
     useState<ReceivedJobApplicationInfo | null>(null);
+
+  const { mutate: updateJob } = useUpdateApplication();
+  const { mutate: deleteJob } = useDeleteApplication();
 
   const handleEdit = (id: number) => {
     const app = data.find((app) => app.id === id);
@@ -30,15 +35,14 @@ export const TableWrapper = ({ data }: ITableWrapper) => {
 
   const handleConfirmDelete = () => {
     if (selectedApp) {
-      // call delete hook
+      deleteJob(selectedApp.id)
       console.log("Deleting application:", selectedApp.id);
-      
     }
   };
 
   const handleEditSubmit = (formData: EditJobApplication) => {
     if (selectedApp) {
-      // call edit hook
+      updateJob({ jobId: selectedApp.id, updatedData: formData });
       console.log("Updating application:", selectedApp.id, formData);
     }
   };
