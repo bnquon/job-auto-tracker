@@ -1,4 +1,4 @@
-type ApplicationStatus =
+export type ApplicationStatus =
   | "applied"
   | "received_oa"
   | "rejected"
