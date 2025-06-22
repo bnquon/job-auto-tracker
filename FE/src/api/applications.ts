@@ -1,7 +1,7 @@
 import { api } from "@/utils/axios";
-import type { UpdateJobApplicationInfo } from "types/JobApplication";
+import type { ReceivedExtractedJobInfo, ReceivedJobApplicationInfo, UpdateJobApplicationInfo } from "types/JobApplication";
 
-export async function getAllApplications() {
+export async function getAllApplications(): Promise<ReceivedJobApplicationInfo[]> {
   const { data } = await api.get("/job_applications")
   return data
 }
@@ -16,7 +16,7 @@ export async function deleteApplication(jobId: number) {
   return data
 }
 
-export async function extractInfo(applicationImage: File) {
+export async function extractInfo(applicationImage: File): Promise<ReceivedExtractedJobInfo> {
   const formData = new FormData();
   formData.append("applicationImage", applicationImage);
   const { data } = await api.post("/job_applications/extract", formData, {
