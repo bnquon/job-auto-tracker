@@ -1,1 +1,1 @@
-move types into a folder?
+think about the table format and cells
