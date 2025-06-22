@@ -1,13 +1,9 @@
-import type { ApplicationStatus } from "../types/JobApplication"
+import type { ApplicationStatus } from "../types/JobApplication";
 
-interface IMapApplicationStatusToString {
-  status: ApplicationStatus
-}
-
-export function MapApplicationStatusToString({ status }: IMapApplicationStatusToString): string {
-  switch(status) {
+export function MapApplicationStatusToString(status: ApplicationStatus): string {
+  switch (status) {
     case "received_oa":
-      return "Received OA"
+      return "Received OA";
     default:
       return status.charAt(0).toUpperCase() + status.slice(1);
   }

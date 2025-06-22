@@ -1,4 +1,4 @@
-import { SignUpForm } from "@/components/signup-form";
+import { SignUpForm } from "@/components/SignUpForm";
 import { ScanText } from "lucide-react";
 
 export const SignUp = () => {

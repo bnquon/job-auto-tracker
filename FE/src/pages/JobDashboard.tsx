@@ -19,7 +19,7 @@ export const JobDashboard = () => {
           active={numActive}
           responseRate={numResponseRate}
         />
-        <TableWrapper />
+        <TableWrapper data={data} />
         <div className="flex gap-6">
           <ApplicationStatusChart />
           <ApplicationsLineChart />

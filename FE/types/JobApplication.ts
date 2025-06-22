@@ -34,6 +34,7 @@ export interface ReceivedExtractedJobInfo {
 export interface ReceivedJobApplicationInfo {
   id: number;
   company_name: string;
+  link: string;
   title: string;
   notes: string | null;
   updated_at: string;

@@ -1,5 +1,5 @@
-import type { LoginData } from "../src/components/login-form";
-import type { SignUpData } from "../src/components/signup-form";
+import type { LoginData } from "../src/components/LoginForm";
+import type { SignUpData } from "../src/components/SignUpForm";
 import { api } from "../src/utils/axios"
 
 export async function LoginAndSignupHelper(
