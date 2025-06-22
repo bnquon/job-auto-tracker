@@ -29,7 +29,7 @@ export const OverviewWrapper = ({
         />
         <OverviewBlocks
           title="Response Rate"
-          value={`${((responseRate / total) * 100).toString()}%`}
+          value={`${Math.round((responseRate / total) * 1000) / 10}%`}
           icon={<MessageCircle size={32} />}
         />
       </div>

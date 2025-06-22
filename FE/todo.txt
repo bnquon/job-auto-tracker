@@ -1,1 +1,2 @@
-make table cell components
+Make link nullable but title and company not
+Work on charts

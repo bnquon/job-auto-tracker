@@ -6,6 +6,7 @@ import { TableWrapper } from "@/components/wrappers/TableWrapper";
 import { useApplications } from "@/hooks/useApplication";
 import { CountingHelper } from "../../helpers/CountingHelper";
 import { UploadWrapper } from "@/components/wrappers/UploadWrapper";
+import { ManualUploadWrapper } from "@/components/wrappers/ManualUploadWrapper";
 
 export const JobDashboard = () => {
   const { data = [] } = useApplications();
@@ -26,8 +27,9 @@ export const JobDashboard = () => {
           <ApplicationsLineChart />
         </div>
       </div>
-      <div className="flex flex-col w-1/4">
+      <div className="flex flex-col w-1/4 gap-6">
         <UploadWrapper />
+        <ManualUploadWrapper />
       </div>
     </PageWrapper>
   );

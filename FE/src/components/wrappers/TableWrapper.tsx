@@ -59,6 +59,9 @@ export const TableWrapper = ({ data }: ITableWrapper) => {
       />
 
       <EditJobApplicationDialog
+        title="Edit Job Application"
+        subTitle="Edit the fields below and save to update the job application."
+        confirmText="Save Changes"
         open={editDialogOpen}
         onOpenChange={setEditDialogOpen}
         onSubmit={handleEditSubmit}

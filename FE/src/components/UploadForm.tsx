@@ -1,10 +1,15 @@
 import { useState, useEffect, useRef } from "react";
+import { Button } from "./ui/button";
 
 interface UploadIconProps {
   className?: string;
 }
 
-export default function UploadForm() {
+interface UploadFormProps {
+  onConfirm: (file: File) => void;
+}
+
+export default function UploadForm({ onConfirm }: UploadFormProps) {
   const [files, setFiles] = useState<File[]>([]);
   const [isDragOver, setIsDragOver] = useState<boolean>(false);
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
@@ -81,9 +86,8 @@ export default function UploadForm() {
   }, []);
 
   const handleUpload = (): void => {
-    console.log("Uploading files:", files);
-    alert(`Uploading ${files.length} file(s)`);
-    // call extract hook here
+    onConfirm(files[0]);
+    clearFiles();
   };
 
   const clearFiles = (): void => {
@@ -95,7 +99,7 @@ export default function UploadForm() {
 
   return (
     <div className="flex flex-col items-center justify-center w-full h-fit bg-background">
-      <div className="max-w-2xl w-full px-6 py-12 bg-card rounded-lg shadow-lg">
+      <div className="max-w-2xl w-full bg-card rounded-lg">
         <div className="flex flex-col items-center justify-center space-y-6">
           <div className="text-center space-y-2">
             <h1 className="text-3xl font-bold text-card-foreground">
@@ -180,20 +184,21 @@ export default function UploadForm() {
           )}
 
           <div className="flex justify-between w-full">
-            <button
+            <Button
               disabled={files.length === 0}
               onClick={clearFiles}
-              className="cursor-pointer px-4 py-2 border border-muted-foreground text-muted-foreground rounded-md hover:bg-muted transition-colors"
+              variant="outline"
+              className="cursor-pointer"
             >
               Clear
-            </button>
-            <button
+            </Button>
+            <Button
               disabled={files.length === 0}
               onClick={handleUpload}
-              className="cursor-pointer w-fit bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90 transition-colors font-medium"
+              className="cursor-pointer"
             >
               Upload
-            </button>
+            </Button>
           </div>
         </div>
       </div>
