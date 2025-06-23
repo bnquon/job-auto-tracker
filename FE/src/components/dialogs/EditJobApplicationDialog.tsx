@@ -69,12 +69,12 @@ export function EditJobApplicationDialog({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
-        className="sm:max-w-[425px]"
+        className="sm:max-w-[425px] bg-[#1e1e1e] border-none [&>button]:text-white [&>button]:hover:text-white [&>button]:hover:bg-[#333333]"
         onOpenAutoFocus={(e) => e.preventDefault()}
       >
         <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>
+          <DialogTitle className="text-[#00d4ff] text-xl">{title}</DialogTitle>
+          <DialogDescription className="text-[#ccc]">
             {subTitle}
           </DialogDescription>
         </DialogHeader>
@@ -88,10 +88,15 @@ export function EditJobApplicationDialog({
           />
 
           <DialogFooter className="flex justify-between w-full">
-            <Button type="button" variant="outline" onClick={handleCancel}>
+            <Button
+              type="button"
+              className="bg-[#555555] hover:bg-[#444444] border-none text-white hover:text-white"
+              variant="outline"
+              onClick={handleCancel}
+            >
               Cancel
             </Button>
-            <Button type="submit">
+            <Button type="submit" className="bg-[#00d4ff] hover:bg-[#00b2e0]">
               {confirmText}
             </Button>
           </DialogFooter>

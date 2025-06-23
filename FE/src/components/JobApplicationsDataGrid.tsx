@@ -28,7 +28,13 @@ const CompanyCell = ({ value }: GridRenderCellParams) => (
   <Typography
     variant="body1"
     fontWeight="600"
-    sx={{ fontSize: "15px", textOverflow: "ellipsis" }}
+    sx={{
+      fontSize: "18px",
+      textOverflow: "ellipsis",
+      color: "#ffffff",
+      overflow: "hidden",
+      whiteSpace: "nowrap",
+    }}
   >
     {value}
   </Typography>
@@ -37,8 +43,13 @@ const CompanyCell = ({ value }: GridRenderCellParams) => (
 const TitleCell = ({ value }: GridRenderCellParams) => (
   <Typography
     variant="body1"
-    color="text.primary"
-    sx={{ fontSize: "15px", textOverflow: "ellipsis" }}
+    sx={{
+      fontSize: "18px",
+      textOverflow: "ellipsis",
+      color: "#ffffff",
+      overflow: "hidden",
+      whiteSpace: "nowrap",
+    }}
   >
     {value}
   </Typography>
@@ -71,7 +82,7 @@ const StatusCell = ({ value }: GridRenderCellParams) => {
       size="medium"
       variant="filled"
       sx={{
-        fontSize: "13px",
+        fontSize: "16px",
         fontWeight: 500,
         height: "28px",
       }}
@@ -82,8 +93,7 @@ const StatusCell = ({ value }: GridRenderCellParams) => {
 const DateCell = ({ value }: GridRenderCellParams) => (
   <Typography
     variant="body1"
-    color="text.secondary"
-    sx={{ fontSize: "15px", textOverflow: "ellipsis" }}
+    sx={{ fontSize: "18px", textOverflow: "ellipsis", color: "#b3b3b3" }}
   >
     {new Date(value).toLocaleDateString()}
   </Typography>
@@ -94,8 +104,7 @@ const LinkCell = ({ value }: GridRenderCellParams) => {
     return (
       <Typography
         variant="body1"
-        color="text.secondary"
-        sx={{ fontSize: "15px", textOverflow: "ellipsis" }}
+        sx={{ fontSize: "18px", textOverflow: "ellipsis", color: "#b3b3b3" }}
       >
         -
       </Typography>
@@ -108,9 +117,9 @@ const LinkCell = ({ value }: GridRenderCellParams) => {
       target="_blank"
       rel="noopener noreferrer"
       style={{
-        color: "#1976d2",
+        color: "#00d4ff",
         textDecoration: "underline",
-        fontSize: "15px",
+        fontSize: "18px",
         fontWeight: 500,
         overflow: "hidden",
         textOverflow: "ellipsis",
@@ -127,14 +136,14 @@ const LinkCell = ({ value }: GridRenderCellParams) => {
 const NotesCell = ({ value }: GridRenderCellParams) => (
   <Typography
     variant="body1"
-    color="text.secondary"
     sx={{
-      fontSize: "15px",
+      fontSize: "18px",
       whiteSpace: "normal",
       wordWrap: "break-word",
       overflow: "hidden",
       textOverflow: "ellipsis",
       maxHeight: "100%",
+      color: "#b3b3b3",
     }}
   >
     {value || "-"}
@@ -165,11 +174,11 @@ const ActionsCell = ({
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <IconButton size="medium" sx={{ padding: "8px" }}>
+        <IconButton size="medium" sx={{ padding: "8px", color: "#00d4ff" }}>
           <EllipsisVertical size={18} />
         </IconButton>
       </PopoverTrigger>
-      <PopoverContent className="w-32 p-1">
+      <PopoverContent className="w-32 p-1 bg-white">
         <div className="flex flex-col">
           <button
             onClick={handleEdit}
@@ -179,7 +188,7 @@ const ActionsCell = ({
           </button>
           <button
             onClick={handleDelete}
-            className="px-3 py-2 text-sm text-left hover:bg-gray-100 rounded text-red-600"
+            className="px-3 py-2 text-sm text-left hover:bg-gray-100 rounded text-red-400"
           >
             Delete
           </button>
@@ -259,50 +268,77 @@ export default function JobApplicationsDataGrid({
     },
   ];
   return (
-    <Box sx={{ width: "100%", height: 500 }}>
+    <Box sx={{ width: "100%", height: "100%", backgroundColor: "#1a1a1a" }}>
       <DataGrid
         rows={data}
         columns={columns}
         initialState={{
           pagination: {
             paginationModel: {
-              pageSize: 10,
+              pageSize: 25,
             },
           },
         }}
-        pageSizeOptions={[5, 10, 25]}
+        pageSizeOptions={[25, 40, 50]}
         disableRowSelectionOnClick
         getRowId={(row) => row.id}
         sx={{
-          // Remove main container border
+          // Remove main container border and set dark background
           border: "none",
+          backgroundColor: "#1e1e1e",
+          color: "#ffffff",
+          height: "100%",
 
           // Header styling
           "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: "#f8fafc",
             borderRadius: "0",
             border: "none",
             "& .MuiDataGrid-columnHeader": {
+              backgroundColor: "#2a2a2a",
               padding: "16px 12px",
+              borderBottom: "none",
               "& .MuiDataGrid-columnHeaderTitle": {
-                fontSize: "14px",
+                fontSize: "16px",
                 fontWeight: 600,
-                color: "#374151",
+                color: "#00d4ff",
                 letterSpacing: "0.5px",
+              },
+              // Column menu icon styling
+              "& .MuiDataGrid-menuIconButton": {
+                color: "#666666",
+                "&:hover": {
+                  backgroundColor: "#333333",
+                  color: "#00d4ff",
+                },
+              },
+              "& .MuiDataGrid-menuIcon": {
+                color: "inherit",
+              },
+              // Sorting arrow styling
+              "& .MuiDataGrid-sortIcon": {
+                color: "#00d4ff",
+                opacity: 1,
               },
             },
           },
 
           "& .MuiDataGrid-row": {
+            backgroundColor: "#1e1e1e",
+            border: "none",
             "&:hover": {
-              backgroundColor: "#f8fafc",
+              backgroundColor: "#2d2d2d",
+            },
+            "&.Mui-selected": {
+              backgroundColor: "#2d2d2d",
+              "&:hover": {
+                backgroundColor: "#333333",
+              },
             },
           },
 
           "& .MuiDataGrid-cell": {
             padding: "16px 12px",
-            borderRight: "1px solid #f1f5f9",
-            borderBottom: "none", // Remove default cell bottom borders
+            borderBottom: "1px solid #2a2a2a",
             "&:last-child": {
               borderRight: "none",
             },
@@ -310,14 +346,16 @@ export default function JobApplicationsDataGrid({
 
           // Footer styling
           "& .MuiDataGrid-footerContainer": {
-            backgroundColor: "transparent",
+            backgroundColor: "#1e1e1e",
             border: "none",
             borderRadius: 0,
-            marginTop: "16px",
             padding: "8px 0",
             minHeight: "52px",
+            position: "sticky",
+            bottom: 0,
 
             "& .MuiTablePagination-root": {
+              color: "#ffffff",
               "& .MuiTablePagination-toolbar": {
                 paddingLeft: 0,
                 paddingRight: 0,
@@ -327,48 +365,53 @@ export default function JobApplicationsDataGrid({
                 {
                   fontSize: "14px",
                   fontWeight: 500,
-                  color: "#374151",
+                  color: "#ffffff",
                 },
 
               "& .MuiTablePagination-select": {
                 fontSize: "14px",
                 fontWeight: 500,
+                color: "#ffffff",
+                backgroundColor: "#1e1e1e",
+                border: "1px solid #404040",
               },
 
               "& .MuiTablePagination-actions": {
                 "& .MuiIconButton-root": {
-                  backgroundColor: "#f8fafc",
-                  border: "1px solid #e2e8f0",
+                  backgroundColor: "#1e1e1e",
+                  border: "1px solid #404040",
                   borderRadius: "6px",
                   margin: "0 2px",
                   padding: "6px",
+                  color: "#ffffff",
                   "&:hover": {
-                    backgroundColor: "#e2e8f0",
+                    backgroundColor: "#333333",
                   },
                   "&.Mui-disabled": {
-                    backgroundColor: "#f1f5f9",
-                    border: "1px solid #f1f5f9",
+                    backgroundColor: "#1a1a1a",
+                    border: "1px solid #404040",
+                    color: "#666666",
                   },
                 },
               },
             },
           },
 
-          // Scrollbar styling
+          // Scrollbar styling for dark theme
           "& .MuiDataGrid-virtualScroller": {
             "&::-webkit-scrollbar": {
               width: "8px",
               height: "8px",
             },
             "&::-webkit-scrollbar-track": {
-              backgroundColor: "#f8fafc",
+              backgroundColor: "#1e1e1e",
               borderRadius: "4px",
             },
             "&::-webkit-scrollbar-thumb": {
-              backgroundColor: "#cbd5e1",
+              backgroundColor: "#555555",
               borderRadius: "4px",
               "&:hover": {
-                backgroundColor: "#94a3b8",
+                backgroundColor: "#777777",
               },
             },
           },

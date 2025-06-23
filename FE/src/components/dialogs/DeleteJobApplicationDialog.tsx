@@ -33,10 +33,12 @@ export function DeleteJobApplicationDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] bg-[#1e1e1e] border-none [&>button]:text-white [&>button]:hover:text-white [&>button]:hover:bg-[#333333]">
         <DialogHeader>
-          <DialogTitle>Delete Job Application</DialogTitle>
-          <DialogDescription>
+          <DialogTitle className="text-[#00d4ff] text-xl">
+            Delete Job Application
+          </DialogTitle>
+          <DialogDescription className="text-white">
             Are you sure you want to delete this job application{" "}
             {application?.company_name && application.title && (
               <>
@@ -48,7 +50,11 @@ export function DeleteJobApplicationDialog({
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="flex justify-between w-full">
-          <Button variant="outline" onClick={handleCancel}>
+          <Button
+            className="bg-[#555555] hover:bg-[#444444] border-none text-white hover:text-white"
+            variant="outline"
+            onClick={handleCancel}
+          >
             Cancel
           </Button>
           <Button variant="destructive" onClick={handleConfirm}>

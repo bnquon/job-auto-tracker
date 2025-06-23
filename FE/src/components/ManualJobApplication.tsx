@@ -23,7 +23,6 @@ export function ManualJobApplication() {
   const { mutate: addJob } = useAddApplication();
 
   const handleFormSubmit = (data: EditJobApplication) => {
-    console.log(data);
     addJob(data);
     reset({
       company_name: null,
@@ -45,7 +44,7 @@ export function ManualJobApplication() {
 
   return (
     <>
-      <p className="text-lg leading-none font-semibold">Add Job Application</p>
+      <p className="text-2xl text-[#00d4ff] font-bold mb-2">Add Job Application</p>
       <form
         onSubmit={handleSubmit(handleFormSubmit)}
         className="space-y-4 mt-2"
@@ -60,13 +59,13 @@ export function ManualJobApplication() {
         <DialogFooter className="flex justify-between w-full">
           <Button
             type="button"
-            className="cursor-pointer"
+            className="cursor-pointer bg-[#555555] hover:bg-[#444444] hover:text-white border-none text-white"
             variant="outline"
             onClick={handleCancel}
           >
             Clear
           </Button>
-          <Button className="cursor-pointer" type="submit">
+          <Button className="cursor-pointer bg-[#00d4ff] hover:bg-[#00b2e0] border-none text-white" type="submit">
             Submit
           </Button>
         </DialogFooter>

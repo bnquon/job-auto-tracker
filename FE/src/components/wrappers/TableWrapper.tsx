@@ -46,8 +46,9 @@ export const TableWrapper = ({ data }: ITableWrapper) => {
   };
 
   return (
-    <>
+    <div className="w-3/4">
       <BentoContainer>
+        <p className="text-2xl text-[#00d4ff] font-bold mb-4">Job Applications</p>
         <DataGridDemo data={data} onEdit={handleEdit} onDelete={handleDelete} />
       </BentoContainer>
       <DeleteJobApplicationDialog
@@ -66,6 +67,6 @@ export const TableWrapper = ({ data }: ITableWrapper) => {
         onSubmit={handleEditSubmit}
         application={selectedApp}
       />
-    </>
+    </div>
   );
 };

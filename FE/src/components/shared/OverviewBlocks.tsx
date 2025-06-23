@@ -1,17 +1,17 @@
+import { BentoContainer } from "./BentoContainer";
+
 interface OverviewBlocksProps {
   title: string;
   value: string;
-  icon: React.ReactNode;
 }
 
-export const OverviewBlocks = ({ title, value, icon }: OverviewBlocksProps) => {
+export const OverviewBlocks = ({ title, value }: OverviewBlocksProps) => {
   return (
-    <div className="rounded-lg p-4 flex justify-between w-1/3">
-      <div className="flex gap-4 text-xl">
-        {icon}
-        <p>{title}</p>
+    <BentoContainer>
+      <div className="rounded-lg p-4 flex flex-col items-center justify-center">
+        <p className="text-4xl font-bold text-[#00d4ff]">{value}</p>
+        <p className="text-white text-xl">{title}</p>
       </div>
-      <p className="text-2xl font-bold">{value}</p>
-    </div>
+    </BentoContainer>
   );
 };

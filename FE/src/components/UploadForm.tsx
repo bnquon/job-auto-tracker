@@ -98,26 +98,20 @@ export default function UploadForm({ onConfirm }: UploadFormProps) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-fit bg-background">
-      <div className="max-w-2xl w-full bg-card rounded-lg">
-        <div className="flex flex-col items-center justify-center space-y-6">
-          <div className="text-center space-y-2">
-            <h1 className="text-2xl font-bold text-card-foreground">
-              Upload Your File
-            </h1>
-            <p className="text-muted-foreground">
-              Drag and drop your files, click to select, or paste from
-              clipboard.
-            </p>
-          </div>
+    <div className="flex flex-col items-center justify-center w-full h-fit">
+      <div className="max-w-2xl w-full rounded-lg">
+        <div className="flex flex-col items-start space-y-6">
+          <h1 className="text-2xl text-[#00d4ff] font-bold">
+            Upload Your File
+          </h1>
 
           <div className="relative w-full">
             <div
               ref={dropZoneRef}
-              className={`w-full bg-muted rounded-md border-2 border-dashed p-6 flex flex-col items-center justify-center space-y-4 cursor-pointer transition-all duration-200 ${
+              className={`w-full bg-[#2a2a2a]/30 rounded-md border-2 border-dashed border-[#444] p-6 flex flex-col items-center justify-center space-y-4 cursor-pointer transition-all duration-200 ${
                 isDragOver
-                  ? "border-primary bg-primary/10 scale-105"
-                  : "border-muted-foreground hover:border-primary hover:bg-primary/10"
+                  ? "border-[#00d4ff] bg-[#00d4ff]/5 scale-105"
+                  : "hover:border-[#00d4ff] hover:bg-[#00d4ff]/5"
               }`}
               onDrop={handleDrop}
               onDragOver={handleDragOver}
@@ -131,12 +125,9 @@ export default function UploadForm({ onConfirm }: UploadFormProps) {
                   isDragOver ? "text-primary" : "text-muted-foreground"
                 }`}
               />
-              <p className="text-muted-foreground text-center">
-                Drag and drop your files here,{" "}
-                <span className="text-primary font-medium">
-                  click to upload
-                </span>
-                , or paste from clipboard
+              <p className="text-white text-center">
+                Drag and drop your files here, click to upload, or paste from
+                clipboard
               </p>
               <input
                 ref={fileInputRef}
@@ -150,7 +141,7 @@ export default function UploadForm({ onConfirm }: UploadFormProps) {
 
             {/* Tooltip */}
             {showTooltip && (
-              <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-sm px-3 py-1 rounded-md whitespace-nowrap z-10">
+              <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-white text-black text-sm px-3 py-1 rounded-md whitespace-nowrap z-10">
                 Supported: JPG, PNG
                 <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-gray-900"></div>
               </div>
@@ -160,20 +151,18 @@ export default function UploadForm({ onConfirm }: UploadFormProps) {
           {/* File preview and upload section */}
           {files.length > 0 && (
             <div className="w-full space-y-4">
-              <div className="bg-muted/50 rounded-md p-4">
-                <h3 className="font-medium text-card-foreground mb-2">
-                  Selected Files:
-                </h3>
+              <div className="bg-[#444] rounded-md p-4">
+                <h3 className="font-medium text-white mb-2">Selected Files:</h3>
                 <div className="space-y-2">
                   {files.map((file, index) => (
                     <div
                       key={index}
                       className="flex items-center justify-between text-sm"
                     >
-                      <span className="text-muted-foreground truncate flex-1">
+                      <span className="truncate flex-1 text-white">
                         {file.name}
                       </span>
-                      <span className="text-muted-foreground ml-2">
+                      <span className="ml-2 text-white">
                         {(file.size / 1024 / 1024).toFixed(2)} MB
                       </span>
                     </div>
@@ -188,14 +177,14 @@ export default function UploadForm({ onConfirm }: UploadFormProps) {
               disabled={files.length === 0}
               onClick={clearFiles}
               variant="outline"
-              className="cursor-pointer"
+              className="cursor-pointer bg-[#555555] hover:bg-[#444444] hover:text-white text-white border-none"
             >
               Clear
             </Button>
             <Button
               disabled={files.length === 0}
               onClick={handleUpload}
-              className="cursor-pointer"
+              className="cursor-pointer bg-[#00d4ff] hover:bg-[#00b2e0]"
             >
               Upload
             </Button>

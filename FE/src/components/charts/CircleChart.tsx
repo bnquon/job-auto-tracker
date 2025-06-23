@@ -13,8 +13,8 @@ interface ApplicationStatusChartProps {
 
 const ApplicationStatusChart = ({ data }: ApplicationStatusChartProps) => {
   return (
-    <div className="w-full h-fit relative rounded-lg shadow-sm border p-4">
-      <h3 className="text-lg font-semibold mb-4 text-gray-800">
+    <div className="w-full p-6 rounded-4xl bg-[#1e1e1e] h-fit relative shadow-sm">
+      <h3 className="text-2xl text-[#00d4ff] font-bold mb-4">
         Application Status Distribution
       </h3>
       <ResponsiveContainer width="100%" height={250}>

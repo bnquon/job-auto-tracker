@@ -11,8 +11,8 @@ interface ApplicationsLineChartProps {
 
 const ApplicationsLineChart = ({ data }: ApplicationsLineChartProps) => {
   return (
-    <div className="w-full h-fit relative rounded-lg shadow-sm border p-4">
-      <h3 className="text-lg font-semibold mb-4 text-gray-800">
+    <div className="w-full p-6 rounded-4xl bg-[#1e1e1e] h-fit relative shadow-sm">
+      <h3 className="text-2xl text-[#00d4ff] font-bold mb-4">
         Applications Last 7 Days
       </h3>
       <ResponsiveContainer width="100%" height={250}>
@@ -21,12 +21,12 @@ const ApplicationsLineChart = ({ data }: ApplicationsLineChartProps) => {
             dataKey="day" 
             axisLine={false}
             tickLine={false}
-            tick={{ fontSize: 12, fill: '#6b7280' }}
+            tick={{ fontSize: 14, fill: '#fff' }}
           />
           <YAxis 
             axisLine={false}
             tickLine={false}
-            tick={{ fontSize: 12, fill: '#6b7280' }}
+            tick={{ fontSize: 14, fill: '#fff' }}
           />
           <Tooltip 
             contentStyle={{
@@ -38,10 +38,10 @@ const ApplicationsLineChart = ({ data }: ApplicationsLineChartProps) => {
           <Line 
             type="linear" 
             dataKey="applications" 
-            stroke="#3b82f6" 
+            stroke="#00d4ff" 
             strokeWidth={3}
-            dot={{ fill: '#3b82f6', strokeWidth: 2, r: 4 }}
-            activeDot={{ r: 6, stroke: '#3b82f6', strokeWidth: 2 }}
+            dot={{ fill: '#00d4ff', strokeWidth: 2, r: 4 }}
+            activeDot={{ r: 6, stroke: '#00d4ff', strokeWidth: 2 }}
           />
         </LineChart>
       </ResponsiveContainer>

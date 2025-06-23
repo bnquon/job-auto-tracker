@@ -39,11 +39,12 @@ export function JobApplicationForm({
   return (
     <div className="space-y-4">
       <div className="grid gap-3">
-        <Label htmlFor="company_name">Company Name</Label>
+        <Label htmlFor="company_name" className="text-[#ccc] text-lg">Company Name</Label>
         <Input
           {...register("company_name")}
           id="company_name"
           placeholder="Enter company name"
+          className="border-[#444] bg-[#2a2a2a] text-[#e0e0e0]"
         />
         {errors.company_name && (
           <p className="text-red-500 text-sm">
@@ -53,11 +54,12 @@ export function JobApplicationForm({
       </div>
 
       <div className="grid gap-3">
-        <Label htmlFor="title">Job Title</Label>
+        <Label htmlFor="title" className="text-[#ccc] text-lg">Job Title</Label>
         <Input
           {...register("title")}
           id="title"
           placeholder="Enter job title"
+          className="bg-[#2a2a2a] border-[#444] text-[#e0e0e0]"
         />
         {errors.title && (
           <p className="text-red-500 text-sm">{errors.title.message}</p>
@@ -65,11 +67,12 @@ export function JobApplicationForm({
       </div>
 
       <div className="grid gap-3">
-        <Label htmlFor="link">Job Link</Label>
+        <Label htmlFor="link" className="text-[#ccc] text-lg">Job Link</Label>
         <Input
           {...register("link")}
           id="link"
           placeholder="https://..."
+          className="bg-[#2a2a2a] border-[#444] text-[#e0e0e0]"
         />
         {errors.link && (
           <p className="text-red-500 text-sm">{errors.link.message}</p>
@@ -77,19 +80,19 @@ export function JobApplicationForm({
       </div>
 
       <div className="grid gap-3">
-        <Label htmlFor="status">Status</Label>
+        <Label htmlFor="status" className="text-[#ccc] text-lg">Status</Label>
         <Select
           value={statusValue}
           onValueChange={(value) =>
             setValue("status", value as ApplicationStatus)
           }
         >
-          <SelectTrigger>
-            <SelectValue placeholder="Select a status" />
+          <SelectTrigger className="bg-[#2a2a2a] text-[#e0e0e0] border-[#444]">
+            <SelectValue placeholder="Select a status" className="text-[#e0e0e0]" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="bg-[#2a2a2a] border-[#444]">
             {statusOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
+              <SelectItem key={option.value} value={option.value} className="text-[#e0e0e0] focus:bg-[#444]">
                 {option.label}
               </SelectItem>
             ))}
@@ -101,9 +104,9 @@ export function JobApplicationForm({
       </div>
 
       <div className="grid gap-3">
-        <Label htmlFor="notes">Notes</Label>
+        <Label htmlFor="notes" className="text-[#ccc] text-lg">Notes</Label>
         <Textarea
-          className="resize-none"
+          className="resize-none bg-[#2a2a2a] text-[#e0e0e0] border-[#444]"
           {...register("notes")}
           id="notes"
           placeholder="Applied with a referral."
