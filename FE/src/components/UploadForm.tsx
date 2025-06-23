@@ -102,8 +102,8 @@ export default function UploadForm({ onConfirm }: UploadFormProps) {
       <div className="max-w-2xl w-full bg-card rounded-lg">
         <div className="flex flex-col items-center justify-center space-y-6">
           <div className="text-center space-y-2">
-            <h1 className="text-3xl font-bold text-card-foreground">
-              Upload Your Files
+            <h1 className="text-2xl font-bold text-card-foreground">
+              Upload Your File
             </h1>
             <p className="text-muted-foreground">
               Drag and drop your files, click to select, or paste from

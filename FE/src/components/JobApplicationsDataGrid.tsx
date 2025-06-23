@@ -20,18 +20,26 @@ import type {
 
 interface JobApplicationsDataGridProps {
   data: ReceivedJobApplicationInfo[];
-  onEdit?: (id: number) => void;
-  onDelete?: (id: number) => void;
+  onEdit: (id: number) => void;
+  onDelete: (id: number) => void;
 }
 
 const CompanyCell = ({ value }: GridRenderCellParams) => (
-  <Typography variant="body2" fontWeight="medium">
+  <Typography
+    variant="body1"
+    fontWeight="600"
+    sx={{ fontSize: "15px", textOverflow: "ellipsis" }}
+  >
     {value}
   </Typography>
 );
 
 const TitleCell = ({ value }: GridRenderCellParams) => (
-  <Typography variant="body2" color="text.primary">
+  <Typography
+    variant="body1"
+    color="text.primary"
+    sx={{ fontSize: "15px", textOverflow: "ellipsis" }}
+  >
     {value}
   </Typography>
 );
@@ -60,14 +68,23 @@ const StatusCell = ({ value }: GridRenderCellParams) => {
     <Chip
       label={MapApplicationStatusToString(value)}
       color={getStatusColor(value)}
-      size="small"
+      size="medium"
       variant="filled"
+      sx={{
+        fontSize: "13px",
+        fontWeight: 500,
+        height: "28px",
+      }}
     />
   );
 };
 
 const DateCell = ({ value }: GridRenderCellParams) => (
-  <Typography variant="body2" color="text.secondary">
+  <Typography
+    variant="body1"
+    color="text.secondary"
+    sx={{ fontSize: "15px", textOverflow: "ellipsis" }}
+  >
     {new Date(value).toLocaleDateString()}
   </Typography>
 );
@@ -75,7 +92,11 @@ const DateCell = ({ value }: GridRenderCellParams) => (
 const LinkCell = ({ value }: GridRenderCellParams) => {
   if (!value) {
     return (
-      <Typography variant="body2" color="text.secondary">
+      <Typography
+        variant="body1"
+        color="text.secondary"
+        sx={{ fontSize: "15px", textOverflow: "ellipsis" }}
+      >
         -
       </Typography>
     );
@@ -89,6 +110,8 @@ const LinkCell = ({ value }: GridRenderCellParams) => {
       style={{
         color: "#1976d2",
         textDecoration: "underline",
+        fontSize: "15px",
+        fontWeight: 500,
         overflow: "hidden",
         textOverflow: "ellipsis",
         whiteSpace: "nowrap",
@@ -96,16 +119,17 @@ const LinkCell = ({ value }: GridRenderCellParams) => {
         maxWidth: "100%",
       }}
     >
-      {value}
+      {value.length > 20 ? `${value.substring(0, 20)}...` : value}
     </a>
   );
 };
 
 const NotesCell = ({ value }: GridRenderCellParams) => (
   <Typography
-    variant="body2"
+    variant="body1"
     color="text.secondary"
     sx={{
+      fontSize: "15px",
       whiteSpace: "normal",
       wordWrap: "break-word",
       overflow: "hidden",
@@ -141,8 +165,8 @@ const ActionsCell = ({
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <IconButton size="small">
-          <EllipsisVertical />
+        <IconButton size="medium" sx={{ padding: "8px" }}>
+          <EllipsisVertical size={18} />
         </IconButton>
       </PopoverTrigger>
       <PopoverContent className="w-32 p-1">
@@ -175,28 +199,32 @@ export default function JobApplicationsDataGrid({
       field: "company_name",
       headerName: "Company",
       display: "flex",
-      width: 200,
+      flex: 1,
+      minWidth: 140,
       renderCell: CompanyCell,
     },
     {
       field: "title",
       headerName: "Job Title",
       display: "flex",
-      width: 250,
+      flex: 2,
+      minWidth: 200,
       renderCell: TitleCell,
     },
     {
       field: "status",
       headerName: "Status",
       display: "flex",
-      width: 120,
+      flex: 1,
+      minWidth: 210,
       renderCell: StatusCell,
     },
     {
       field: "link",
       headerName: "Link",
       display: "flex",
-      width: 150,
+      flex: 1.5,
+      minWidth: 150,
       sortable: false,
       renderCell: LinkCell,
     },
@@ -204,22 +232,24 @@ export default function JobApplicationsDataGrid({
       field: "applied_on",
       headerName: "Applied On",
       display: "flex",
-      width: 130,
+      flex: 1,
+      minWidth: 120,
       renderCell: DateCell,
     },
     {
       field: "notes",
       headerName: "Notes",
       display: "flex",
-      width: 200,
+      flex: 1,
+      minWidth: 180,
       sortable: false,
       renderCell: NotesCell,
     },
     {
       field: "actions",
       headerName: "Actions",
-      width: 80,
       display: "flex",
+      width: 90,
       sortable: false,
       filterable: false,
       disableColumnMenu: true,
@@ -228,16 +258,15 @@ export default function JobApplicationsDataGrid({
       ),
     },
   ];
-
   return (
-    <Box sx={{ height: 400, width: "100%" }}>
+    <Box sx={{ width: "100%", height: 500 }}>
       <DataGrid
         rows={data}
         columns={columns}
         initialState={{
           pagination: {
             paginationModel: {
-              pageSize: 5,
+              pageSize: 10,
             },
           },
         }}
@@ -245,19 +274,103 @@ export default function JobApplicationsDataGrid({
         disableRowSelectionOnClick
         getRowId={(row) => row.id}
         sx={{
-          borderRadius: 2,
-          border: 1,
-          borderColor: "divider",
-          "& .MuiDataGrid-main": {
-            borderRadius: 2,
-          },
+          // Remove main container border
+          border: "none",
+
+          // Header styling
           "& .MuiDataGrid-columnHeaders": {
-            borderTopLeftRadius: 8,
-            borderTopRightRadius: 8,
+            backgroundColor: "#f8fafc",
+            borderRadius: "0",
+            border: "none",
+            "& .MuiDataGrid-columnHeader": {
+              padding: "16px 12px",
+              "& .MuiDataGrid-columnHeaderTitle": {
+                fontSize: "14px",
+                fontWeight: 600,
+                color: "#374151",
+                letterSpacing: "0.5px",
+              },
+            },
           },
+
+          "& .MuiDataGrid-row": {
+            "&:hover": {
+              backgroundColor: "#f8fafc",
+            },
+          },
+
+          "& .MuiDataGrid-cell": {
+            padding: "16px 12px",
+            borderRight: "1px solid #f1f5f9",
+            borderBottom: "none", // Remove default cell bottom borders
+            "&:last-child": {
+              borderRight: "none",
+            },
+          },
+
+          // Footer styling
           "& .MuiDataGrid-footerContainer": {
-            borderBottomLeftRadius: 8,
-            borderBottomRightRadius: 8,
+            backgroundColor: "transparent",
+            border: "none",
+            borderRadius: 0,
+            marginTop: "16px",
+            padding: "8px 0",
+            minHeight: "52px",
+
+            "& .MuiTablePagination-root": {
+              "& .MuiTablePagination-toolbar": {
+                paddingLeft: 0,
+                paddingRight: 0,
+              },
+
+              "& .MuiTablePagination-selectLabel, & .MuiTablePagination-displayedRows":
+                {
+                  fontSize: "14px",
+                  fontWeight: 500,
+                  color: "#374151",
+                },
+
+              "& .MuiTablePagination-select": {
+                fontSize: "14px",
+                fontWeight: 500,
+              },
+
+              "& .MuiTablePagination-actions": {
+                "& .MuiIconButton-root": {
+                  backgroundColor: "#f8fafc",
+                  border: "1px solid #e2e8f0",
+                  borderRadius: "6px",
+                  margin: "0 2px",
+                  padding: "6px",
+                  "&:hover": {
+                    backgroundColor: "#e2e8f0",
+                  },
+                  "&.Mui-disabled": {
+                    backgroundColor: "#f1f5f9",
+                    border: "1px solid #f1f5f9",
+                  },
+                },
+              },
+            },
+          },
+
+          // Scrollbar styling
+          "& .MuiDataGrid-virtualScroller": {
+            "&::-webkit-scrollbar": {
+              width: "8px",
+              height: "8px",
+            },
+            "&::-webkit-scrollbar-track": {
+              backgroundColor: "#f8fafc",
+              borderRadius: "4px",
+            },
+            "&::-webkit-scrollbar-thumb": {
+              backgroundColor: "#cbd5e1",
+              borderRadius: "4px",
+              "&:hover": {
+                backgroundColor: "#94a3b8",
+              },
+            },
           },
         }}
       />

@@ -1,24 +1,22 @@
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, Tooltip } from 'recharts';
 
-const ApplicationsLineChart = () => {
-  // Default data for past 7 days
-  const defaultData = [
-    { day: 'Mon', applications: 2 },
-    { day: 'Tue', applications: 5 },
-    { day: 'Wed', applications: 1 },
-    { day: 'Thu', applications: 8 },
-    { day: 'Fri', applications: 3 },
-    { day: 'Sat', applications: 0 },
-    { day: 'Sun', applications: 4 }
-  ];
+interface LineChartData {
+  day: string;
+  applications: number;
+}
 
+interface ApplicationsLineChartProps {
+  data: LineChartData[];
+}
+
+const ApplicationsLineChart = ({ data }: ApplicationsLineChartProps) => {
   return (
-    <div className="w-full h-fit bg-white rounded-lg shadow-sm border p-4">
+    <div className="w-full h-fit relative rounded-lg shadow-sm border p-4">
       <h3 className="text-lg font-semibold mb-4 text-gray-800">
         Applications Last 7 Days
       </h3>
-      <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={defaultData}>
+      <ResponsiveContainer width="100%" height={250}>
+        <LineChart data={data}>
           <XAxis 
             dataKey="day" 
             axisLine={false}

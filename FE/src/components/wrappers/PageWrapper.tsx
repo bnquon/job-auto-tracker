@@ -13,7 +13,7 @@ export const PageWrapper = ({ children }: PageWrapperProps) => {
       }}
       className="min-h-screen flex items-start justify-center p-4"
     >
-      <div className="max-w-[1620px] w-full gap-6 flex">
+      <div className="max-w-[1800px] w-full gap-6 flex">
         {children}
       </div>
     </div>

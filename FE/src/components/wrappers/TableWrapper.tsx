@@ -35,7 +35,7 @@ export const TableWrapper = ({ data }: ITableWrapper) => {
 
   const handleConfirmDelete = () => {
     if (selectedApp) {
-      deleteJob(selectedApp.id)
+      deleteJob(selectedApp.id);
       console.log("Deleting application:", selectedApp.id);
     }
   };
@@ -48,9 +48,10 @@ export const TableWrapper = ({ data }: ITableWrapper) => {
   };
 
   return (
-    <BentoContainer>
-      <DataGridDemo data={data} onEdit={handleEdit} onDelete={handleDelete} />
-
+    <>
+      <BentoContainer>
+        <DataGridDemo data={data} onEdit={handleEdit} onDelete={handleDelete} />
+      </BentoContainer>
       <DeleteJobApplicationDialog
         open={deleteDialogOpen}
         onOpenChange={setDeleteDialogOpen}
@@ -67,6 +68,6 @@ export const TableWrapper = ({ data }: ITableWrapper) => {
         onSubmit={handleEditSubmit}
         application={selectedApp}
       />
-    </BentoContainer>
+    </>
   );
 };
