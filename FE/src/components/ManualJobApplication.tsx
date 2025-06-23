@@ -23,6 +23,7 @@ export function ManualJobApplication() {
   const { mutate: addJob } = useAddApplication();
 
   const handleFormSubmit = (data: EditJobApplication) => {
+    console.log(data);
     addJob(data);
     reset({
       company_name: null,

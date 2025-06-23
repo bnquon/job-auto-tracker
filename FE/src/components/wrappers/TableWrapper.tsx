@@ -36,14 +36,12 @@ export const TableWrapper = ({ data }: ITableWrapper) => {
   const handleConfirmDelete = () => {
     if (selectedApp) {
       deleteJob(selectedApp.id);
-      console.log("Deleting application:", selectedApp.id);
     }
   };
 
   const handleEditSubmit = (formData: EditJobApplication) => {
     if (selectedApp) {
       updateJob({ jobId: selectedApp.id, updatedData: formData });
-      console.log("Updating application:", selectedApp.id, formData);
     }
   };
 

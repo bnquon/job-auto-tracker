@@ -6,7 +6,7 @@ from models.job_application import StatusEnum
 class JobApplicationBase(BaseModel):
   company_name: str
   title: str
-  link: str
+  link: Optional[str]
 
 class JobApplicationCreate(JobApplicationBase):
   user_id: Optional[int] = None

@@ -12,7 +12,6 @@ router = APIRouter(
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
 def create_job_application_route(job_application: JobApplicationCreate, db: Session = Depends(get_db), user_id: int = Depends(get_current_user_id)):
-  print(job_application)
   return create_job_application(db, job_application, user_id)
 
 @router.post("/extract", status_code=status.HTTP_201_CREATED)

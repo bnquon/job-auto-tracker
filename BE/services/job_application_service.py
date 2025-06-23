@@ -10,7 +10,6 @@ from datetime import datetime
 def create_job_application(db: Session, job_application: JobApplicationCreate, user_id: int) -> JobApplication:
   job_application_data = job_application.model_dump()
   job_application_data["user_id"] = user_id
-  job_application_data["status"] = StatusEnum.applied
   job_application_data["applied_on"] = datetime.now()
   job_application_create = JobApplicationCreate(**job_application_data)
   return job_application_repository.create_job_application(db, job_application_create)
