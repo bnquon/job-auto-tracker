@@ -29,10 +29,10 @@ def login_user_standard(db: Session, user: UserCreateStandard) -> str:
     db_user = users_repository.login_user(db, user)
 
     if not db_user:
-        raise HTTPException(status_code=401, detail="Invalid email or password")
+        raise HTTPException(status_code=400, detail="Invalid email or password")
 
     if not verify_password(user.password, getattr(db_user, "password")):
-        raise HTTPException(status_code=401, detail="Invalid email or password")
+        raise HTTPException(status_code=400, detail="Invalid email or password")
 
     token = create_jwt_token(getattr(db_user, "id"))
     return token

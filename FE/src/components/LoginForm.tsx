@@ -8,11 +8,14 @@ import { useNavigate } from "react-router-dom";
 import { LoginAndSignupHelper } from "../../helpers/LoginAndSignupHelper"
 import { LoginSchema } from "../../schemas/LoginSchema";
 import type { LoginData } from "../../types/LoginData";
+import { AuthContext } from "@/context/AuthContext";
+import { useContext } from "react";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"form">) {
+  const auth = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -26,6 +29,7 @@ export function LoginForm({
 
   async function handleLogin(formData: LoginData) {
     if (await LoginAndSignupHelper(formData, "/users/login")) {
+      auth?.checkAuth();
       navigate("/app")
     } 
     // use a toast popup or something to say login failed

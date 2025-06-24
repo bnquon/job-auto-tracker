@@ -1,5 +1,5 @@
-import type { LoginData } from "../src/components/LoginForm";
-import type { SignUpData } from "../src/components/SignUpForm";
+import type { LoginData } from "../types/LoginData";
+import type { SignUpData } from "../types/SignUpData";
 import { api } from "../src/utils/axios"
 
 export async function LoginAndSignupHelper(
@@ -7,11 +7,7 @@ export async function LoginAndSignupHelper(
   endpoint: string
 ) {
   try {
-    const res = await api.post(endpoint, formData);
-    if (res.status === 200) {
-      const { access_token } = res.data;
-      localStorage.setItem("token", access_token);      
-    }
+    await api.post(endpoint, formData);
     return true;
   } catch (err) {
     console.error("API error:", err);

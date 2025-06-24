@@ -8,11 +8,14 @@ import { LoginAndSignupHelper } from "../../helpers/LoginAndSignupHelper"
 import { useNavigate } from "react-router";
 import { SignUpSchema } from "../../schemas/SignUpSchema";
 import type { SignUpData } from "../../types/SignUpData";
+import { AuthContext } from "@/context/AuthContext";
+import { useContext } from "react";
 
 export function SignUpForm({
   className,
   ...props
 }: React.ComponentProps<"form">) {
+  const auth = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -26,6 +29,7 @@ export function SignUpForm({
 
   async function handleSignUp(formData: SignUpData) {
     if (await LoginAndSignupHelper(formData, "/users/standard")) {
+      auth?.checkAuth();
       navigate("/app")
     } 
     // use a toast popup or something to say signup failed

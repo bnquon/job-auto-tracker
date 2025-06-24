@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from controllers import users_controller, job_application_controller
+from controllers import users_controller, job_application_controller, auth_controller
 
 app = FastAPI()
 
@@ -14,3 +14,4 @@ app.add_middleware(
 
 app.include_router(users_controller.router)
 app.include_router(job_application_controller.router)
+app.include_router(auth_controller.router)
