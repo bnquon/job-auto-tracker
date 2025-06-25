@@ -1,15 +1,7 @@
-import { createContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "@/utils/axios";
-
-interface AuthContextType {
-  isAuthenticated: boolean;
-  loading: boolean;
-  checkAuth: () => Promise<void>;
-  logout: () => void;
-}
-
-export const AuthContext = createContext<AuthContextType | undefined>(undefined);
+import { AuthContext } from "./AuthContext";
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -18,7 +10,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const checkAuth = async () => {
     try {
-      await api.get("/auth/me"); // Will send cookies
+      await api.get("/auth/me");
       setIsAuthenticated(true);
     } catch {
       setIsAuthenticated(false);
@@ -34,7 +26,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
-    checkAuth(); // only runs once on mount
+    checkAuth();
   }, []);
 
   return (

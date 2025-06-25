@@ -1,7 +1,6 @@
 import ApplicationStatusChart from "@/components/charts/CircleChart";
 import ApplicationsLineChart from "@/components/charts/LineChart";
 import { OverviewWrapper } from "@/components/wrappers/OverviewWrapper";
-import { PageWrapper } from "@/components/wrappers/PageWrapper";
 import { TableWrapper } from "@/components/wrappers/TableWrapper";
 import { useApplications } from "@/hooks/useApplication";
 import {
@@ -12,42 +11,55 @@ import {
 import { UploadWrapper } from "@/components/wrappers/UploadWrapper";
 import { ManualUploadWrapper } from "@/components/wrappers/ManualUploadWrapper";
 import { useMemo } from "react";
+import AppSidebar from "@/AppSidebar";
 
 export const JobDashboard = () => {
   const { data = [] } = useApplications();
 
-  const { numActive, numTotal, numResponseRate } = useMemo(() => 
-    countingHelper({ data }), [data]
-  );
-  
-  const pieChartData = useMemo(() => 
-    getStatusCounts({ data }), [data]
-  );
-  
-  const lineChartData = useMemo(() => 
-    getLast7DaysData({ data }), [data]
+  const { numActive, numTotal, numResponseRate } = useMemo(
+    () => countingHelper({ data }),
+    [data]
   );
 
+  const pieChartData = useMemo(() => getStatusCounts({ data }), [data]);
+
+  const lineChartData = useMemo(() => getLast7DaysData({ data }), [data]);
+
   return (
-    <>
-      <PageWrapper>
-        <OverviewWrapper
-          total={numTotal}
-          active={numActive}
-          responseRate={numResponseRate}
-        />
-        <div className="flex gap-4">
-          <TableWrapper data={data} />
-          <div className="flex flex-col w-1/4 gap-4">
-            <ManualUploadWrapper />
-            <UploadWrapper />
+    <div className="flex h-screen bg-gray-950">
+      {/* Sidebar - NOT fixed positioned */}
+      <div className="flex-shrink-0">
+        <AppSidebar />
+      </div>
+
+      {/* Main Content Area */}
+      <div className="flex-1 overflow-auto">
+        <div className="w-3/4 mx-auto min-h-full p-6 space-y-6">
+          {/* Overview blocks - full width of container */}
+          <div className="w-full">
+            <OverviewWrapper
+              total={numTotal}
+              active={numActive}
+              responseRate={numResponseRate}
+            />
+          </div>
+
+          {/* Table and Upload sections */}
+          <div className="grid grid-cols-[3fr_1fr] gap-6 w-full">
+            <TableWrapper data={data} />
+            <div className="flex flex-col gap-6">
+              <ManualUploadWrapper />
+              <UploadWrapper />
+            </div>
+          </div>
+
+          {/* Charts section */}
+          <div className="grid grid-cols-2 gap-6 w-full">
+            <ApplicationStatusChart data={pieChartData} />
+            <ApplicationsLineChart data={lineChartData} />
           </div>
         </div>
-        <div className="flex gap-4 relative">
-          <ApplicationStatusChart data={pieChartData} />
-          <ApplicationsLineChart data={lineChartData} />
-        </div>
-      </PageWrapper>
-    </>
+      </div>
+    </div>
   );
 };
