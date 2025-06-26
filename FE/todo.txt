@@ -1,2 +1,1 @@
-Make link nullable but title and company not
-Work on charts
+- after finishing backend migration to use cycles update frontend to use cycles

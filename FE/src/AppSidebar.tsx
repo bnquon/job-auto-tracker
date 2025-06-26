@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { MoreHorizontal, LogOut, Edit2, Trash2, Plus } from "lucide-react";
 import {
   Sidebar,
@@ -19,8 +19,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { AuthContext } from "./context/AuthContext";
 
 export default function AppSidebar() {
+  const auth = useContext(AuthContext);
   // DUMMY DATA - Replace with your actual cycles state/hook
   const [cycles, setCycles] = useState([
     { id: 1, title: "Software Engineering 2025", active: true },
@@ -98,33 +100,33 @@ export default function AppSidebar() {
     // TODO: Replace with your signOut hook/function
     // Example: const { signOut } = useAuth()
     // signOut()
-
+    auth?.logout();
     console.log("Sign out clicked");
   };
 
   return (
     <Sidebar className="border-r border-gray-800 w-80">
-      <SidebarContent className="bg-[#1e1e1e]">
-        <SidebarGroup>
-          {/* HEADER WITH ADD BUTTON */}
-          <div className="flex flex-col justify-between px-2 py-1 mb-8 gap-8 relative">
-            <div className="flex items-center text-2xl text-white font-semibold">
-              Auto Tracker
-            </div>
-            <div
-              onClick={addNewCycle}
-              className="flex items-center text-xl text-white font-semibold py-2 px-1 hover:bg-gray-800 cursor-pointer"
-            >
-              <Plus
-                size={32}
-                className="rounded-full bg-[#00d4ff] p-[2px] mr-4"
-              />
-              Add New Cycle
-            </div>
+      <SidebarContent className="bg-[#1e1e1e] flex flex-col h-full">
+        {/* FIXED HEADER WITH ADD BUTTON */}
+        <div className="flex flex-col justify-between px-2 py-1 mb-8 gap-8 flex-shrink-0">
+          <div className="flex items-center text-2xl text-white font-semibold py-2 px-1">
+            Auto Tracker
           </div>
+          <div
+            onClick={addNewCycle}
+            className="flex items-center text-xl text-white font-semibold py-2 px-1 hover:bg-gray-800 cursor-pointer"
+          >
+            <Plus
+              size={32}
+              className="rounded-full bg-[#00d4ff] p-[2px] mr-4"
+            />
+            Add New Cycle
+          </div>
+        </div>
 
-          {/* CYCLES LIST */}
-          <SidebarGroupContent>
+        {/* SCROLLABLE CYCLES SECTION */}
+        <SidebarGroup className="flex-1 overflow-hidden">
+          <SidebarGroupContent className="h-full overflow-y-auto">
             <SidebarMenu>
               {cycles.map((cycle) => (
                 <SidebarMenuItem key={cycle.id}>
@@ -208,7 +210,7 @@ export default function AppSidebar() {
       </SidebarContent>
 
       {/* FOOTER WITH SIGN OUT */}
-      <SidebarFooter className="bg-[#1e1e1e] border-t border-gray-800 py-4">
+      <SidebarFooter className="bg-[#1e1e1e] border-t border-gray-800 py-4 flex-shrink-0">
         <SidebarMenu>
           <SidebarMenuItem>
             <div

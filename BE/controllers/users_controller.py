@@ -31,3 +31,13 @@ def login_user_standard_route(user: UserCreateStandard, response: Response, db: 
     secure=True
   )
   return {"message": "Login successful"}
+
+@router.post("/logout", status_code=status.HTTP_200_OK)
+def logout_user_route(response: Response):
+  response.delete_cookie(
+    key="token",
+    httponly=False, # Set this to True in production
+    samesite="none",
+    secure=True
+  )
+  return {"message": "Logout successful"}
