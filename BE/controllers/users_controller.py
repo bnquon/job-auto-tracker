@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, status, Response
 from sqlalchemy.orm import Session
 from schemas.users_schema import UserCreateStandard, UserCreateOauth
 from services.users_service import create_user_standard, create_user_oauth, login_user_standard
+from services.job_cycle_service import create_default_job_cycle
 from db.database import get_db
 
 router = APIRouter(
@@ -10,9 +11,18 @@ router = APIRouter(
 )
 
 @router.post("/standard", status_code=status.HTTP_201_CREATED)
-def create_user_standard_route(user: UserCreateStandard, db: Session = Depends(get_db)):
+def create_user_standard_route(user: UserCreateStandard, response: Response, db: Session = Depends(get_db)):
   token = create_user_standard(db, user)
-  return {"access_token": token, "token_type": "bearer"}
+
+  response.set_cookie(
+    key="token",
+    value=token,
+    httponly=False, # Set this to True in production
+    max_age=60 * 60 * 24, # 1 day
+    samesite="none",
+    secure=True
+  )
+  return {"message": "User created successfully"}
 
 @router.post("/oauth")
 def create_user_oauth_route(user: UserCreateOauth, db: Session = Depends(get_db)):

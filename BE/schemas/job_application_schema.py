@@ -7,6 +7,7 @@ class JobApplicationBase(BaseModel):
   company_name: str
   title: str
   link: Optional[str]
+  cycle_id: int
 
 class JobApplicationCreate(JobApplicationBase):
   user_id: Optional[int] = None

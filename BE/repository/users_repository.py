@@ -12,7 +12,6 @@ def create_user_standard(db: Session, user: UserCreateStandard) -> int:
     return getattr(db_user, 'id')
   except Exception as e:
     db.rollback()
-    print("❌ DB Error:", e)
     return False
 
 def create_user_oauth(db: Session, user: UserCreateOauth) -> int:

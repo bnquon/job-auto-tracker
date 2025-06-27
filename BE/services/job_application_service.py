@@ -51,5 +51,5 @@ def edit_job_application(db: Session, job_application_id: int, job_application_u
   if not edited:
     raise HTTPException(status_code=404, detail="Editing job application failed")
 
-def get_job_application(db: Session, user_id: int) -> Sequence[JobApplication]:
-  return job_application_repository.get_job_application(db, user_id)
+def get_job_application(db: Session, user_id: int, job_cycle_id: int) -> Sequence[JobApplication]:
+  return job_application_repository.get_job_application(db, user_id, job_cycle_id)

@@ -38,5 +38,5 @@ def edit_job_application(db: Session, job_application_id: int, job_application_u
     db.rollback()
     return False
 
-def get_job_application(db: Session, user_id: int) -> Sequence[JobApplication]:
-  return db.query(JobApplication).filter(JobApplication.user_id == user_id).all()
+def get_job_application(db: Session, user_id: int, job_cycle_id: int) -> Sequence[JobApplication]:
+  return db.query(JobApplication).filter(JobApplication.user_id == user_id, JobApplication.cycle_id == job_cycle_id).all()

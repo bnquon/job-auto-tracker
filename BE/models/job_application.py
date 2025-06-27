@@ -14,6 +14,7 @@ class JobApplication(Base):
   __tablename__ = "job_applications"
   id = Column(Integer, primary_key=True, autoincrement=True)
   user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
+  cycle_id = Column(Integer, ForeignKey("job_cycles.id", ondelete="CASCADE"), nullable=False)
   company_name = Column(String, nullable=False)
   title = Column(String, nullable=False)
   link = Column(String, nullable=False)

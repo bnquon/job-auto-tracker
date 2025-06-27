@@ -3,6 +3,7 @@ from auth.jwt import create_jwt_token
 from models.users import User
 from schemas.users_schema import UserCreateStandard, UserCreateOauth
 from repository import users_repository
+from services.job_cycle_service import create_default_job_cycle
 from sqlalchemy.orm import Session
 import bcrypt
 
@@ -20,6 +21,8 @@ def create_user_standard(db: Session, user: UserCreateStandard) -> str:
     raise HTTPException(status_code=400, detail="User creation failed")
   
   token = create_jwt_token(created_user_id)
+  create_default_job_cycle(db, created_user_id)
+
   return token
 
 def create_user_oauth(db: Session, user: UserCreateOauth) -> int:

@@ -18,9 +18,9 @@ def create_job_application_route(job_application: JobApplicationCreate, db: Sess
 def extract_job_info_route(job_application_image: UploadFile = File(...), _ = Depends(get_current_user_id)):
   return extract_job_application_info(job_application_image)
 
-@router.get("/", status_code=status.HTTP_200_OK)
-def get_job_application_route(db: Session = Depends(get_db), user_id: int = Depends(get_current_user_id)):
-  return get_job_application(db, user_id)
+@router.get("/by_cycle/{job_cycle_id}", status_code=status.HTTP_200_OK)
+def get_job_application_route(job_cycle_id: int, db: Session = Depends(get_db), user_id: int = Depends(get_current_user_id)):
+  return get_job_application(db, user_id, job_cycle_id)
 
 @router.delete("/{job_application_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_job_application_route(job_application_id: int, db: Session = Depends(get_db), user_id: int = Depends(get_current_user_id)):
