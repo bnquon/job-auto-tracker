@@ -13,17 +13,15 @@ export const OverviewWrapper = ({
 }: IOverviewWrapper) => {
   return (
     <div className="flex gap-4">
-      <OverviewBlocks
-        title="Total"
-        value={total.toString()}
-      />
-      <OverviewBlocks
-        title="Active"
-        value={active.toString()}
-      />
+      <OverviewBlocks title="Total" value={total.toString()} />
+      <OverviewBlocks title="Active" value={active.toString()} />
       <OverviewBlocks
         title="Response Rate"
-        value={`${Math.round((responseRate / total) * 1000) / 10}%`}
+        value={
+          total === 0
+            ? "--%"
+            : `${Math.round((responseRate / total) * 1000) / 10}%`
+        }
       />
     </div>
   );

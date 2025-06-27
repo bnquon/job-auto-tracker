@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { ReceivedJobApplicationInfo } from "types/JobApplication";
 import { BentoContainer } from "../shared/BentoContainer";
-import DataGridDemo from "../JobApplicationsDataGrid";
+import JobApplicationsDataGrid from "../JobApplicationsDataGrid";
 import { DeleteJobApplicationDialog } from "../dialogs/DeleteJobApplicationDialog";
 import { EditJobApplicationDialog } from "../dialogs/EditJobApplicationDialog";
 import type { EditJobApplication } from "types/EditJobApplication";
@@ -9,10 +9,10 @@ import { useUpdateApplication } from "@/hooks/useUpdateApplication";
 import { useDeleteApplication } from "@/hooks/useDeleteApplication";
 
 interface ITableWrapper {
-  data: ReceivedJobApplicationInfo[];
+  data?: ReceivedJobApplicationInfo[];
 }
 
-export const TableWrapper = ({ data }: ITableWrapper) => {
+export const TableWrapper = ({ data = [] }: ITableWrapper) => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [selectedApp, setSelectedApp] =
@@ -49,7 +49,7 @@ export const TableWrapper = ({ data }: ITableWrapper) => {
     <>
       <BentoContainer>
         <p className="text-2xl text-[#00d4ff] font-bold mb-4">Job Applications</p>
-        <DataGridDemo data={data} onEdit={handleEdit} onDelete={handleDelete} />
+        <JobApplicationsDataGrid data={data} onEdit={handleEdit} onDelete={handleDelete} />
       </BentoContainer>
       <DeleteJobApplicationDialog
         open={deleteDialogOpen}

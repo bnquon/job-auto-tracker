@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { getAllApplications } from "@/api/applications";
+import { getJobApplicationsByCycle } from "@/api/applications";
 
-export function useApplications() {
+export function useJobApplicationsByCycle(jobCycleId: number) {
   return useQuery({
-    queryKey: ["applications"],
-    queryFn: getAllApplications,
+    enabled: !!jobCycleId,
+    queryKey: ["applications", jobCycleId],
+    queryFn: () => getJobApplicationsByCycle(jobCycleId),
   });
 }

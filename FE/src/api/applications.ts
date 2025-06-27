@@ -5,10 +5,10 @@ import type {
   UpdateJobApplicationInfo,
 } from "types/JobApplication";
 
-export async function getAllApplications(): Promise<
+export async function getJobApplicationsByCycle(jobCycleId: number): Promise<
   ReceivedJobApplicationInfo[]
 > {
-  const { data } = await api.get("/job_applications");
+  const { data } = await api.get(`/job_applications/by_cycle/${jobCycleId}`);
   return data;
 }
 

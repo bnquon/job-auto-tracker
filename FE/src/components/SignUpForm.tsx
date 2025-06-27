@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoginAndSignupHelper } from "../../helpers/LoginAndSignupHelper"
+import { LoginAndSignupHelper } from "../../helpers/LoginAndSignupHelper";
 import { useNavigate } from "react-router";
 import { SignUpSchema } from "../../schemas/SignUpSchema";
 import type { SignUpData } from "../../types/SignUpData";
@@ -28,10 +28,15 @@ export function SignUpForm({
   const navigate = useNavigate();
 
   async function handleSignUp(formData: SignUpData) {
-    if (await LoginAndSignupHelper(formData, "/users/standard")) {
+    if (
+      await LoginAndSignupHelper(
+        { email: formData.email, password: formData.password },
+        "/users/standard"
+      )
+    ) {
       auth?.checkAuth();
-      navigate("/app")
-    } 
+      navigate("/app");
+    }
     // use a toast popup or something to say signup failed
   }
 

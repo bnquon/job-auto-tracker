@@ -5,7 +5,7 @@ from schemas.users_schema import UserCreateStandard, UserCreateOauth
 def create_user_standard(db: Session, user: UserCreateStandard) -> int:
   try:
     db_user = User(**user.model_dump())
-    print(db_user)
+    print("🔔 THIS IS THE NEW DB_USER: ", db_user)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)

@@ -17,6 +17,7 @@ import type {
   ApplicationStatus,
   ReceivedJobApplicationInfo,
 } from "types/JobApplication";
+import { EmptyState } from "./shared/EmptyState";
 
 interface JobApplicationsDataGridProps {
   data: ReceivedJobApplicationInfo[];
@@ -267,6 +268,19 @@ export default function JobApplicationsDataGrid({
       ),
     },
   ];
+
+  // If data is empty, show empty state
+  if (data.length === 0) {
+    return (
+      <Box sx={{ width: "100%", height: "100%" }}>
+        <EmptyState
+          mainText="No applications yet"
+          subText="Start tracking your job applications by adding your first application"
+        />
+      </Box>
+    );
+  }
+
   return (
     <Box sx={{ width: "100%", height: "100%", backgroundColor: "#1a1a1a" }}>
       <DataGrid

@@ -1,11 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { editJobApplicationSchema } from "../../schemas/EditJobSchema";
-import type { EditJobApplication } from "../../types/EditJobApplication";
+import type { ManualJobApplication } from "../../types/ManualJobApplication";
 import { JobApplicationForm } from "./JobApplicationForm";
 import { Button } from "./ui/button";
 import { DialogFooter } from "./ui/dialog";
 import { useAddApplication } from "@/hooks/useAddApplication";
+import { manualAddJobApplicationSchema } from "../../schemas/ManualAddJobSchema";
 
 export function ManualJobApplication() {
   const {
@@ -15,18 +15,18 @@ export function ManualJobApplication() {
     setValue,
     watch,
     reset,
-  } = useForm<EditJobApplication>({
-    resolver: zodResolver(editJobApplicationSchema),
+  } = useForm<ManualJobApplication>({
+    resolver: zodResolver(manualAddJobApplicationSchema),
     mode: "onSubmit",
   });
 
   const { mutate: addJob } = useAddApplication();
 
-  const handleFormSubmit = (data: EditJobApplication) => {
+  const handleFormSubmit = (data: ManualJobApplication) => {
     addJob(data);
     reset({
-      company_name: null,
-      title: null,
+      company_name: "",
+      title: "",
       link: null,
       notes: null,
       status: "applied",
@@ -35,8 +35,8 @@ export function ManualJobApplication() {
 
   const handleCancel = () =>
     reset({
-      company_name: null,
-      title: null,
+      company_name: "",
+      title: "",
       link: null,
       notes: null,
       status: "applied",
@@ -44,7 +44,9 @@ export function ManualJobApplication() {
 
   return (
     <>
-      <p className="text-2xl text-[#00d4ff] font-bold mb-2">Add Job Application</p>
+      <p className="text-2xl text-[#00d4ff] font-bold mb-2">
+        Add Job Application
+      </p>
       <form
         onSubmit={handleSubmit(handleFormSubmit)}
         className="space-y-4 mt-2"
@@ -65,7 +67,10 @@ export function ManualJobApplication() {
           >
             Clear
           </Button>
-          <Button className="cursor-pointer bg-[#00d4ff] hover:bg-[#00b2e0] border-none text-white" type="submit">
+          <Button
+            className="cursor-pointer bg-[#00d4ff] hover:bg-[#00b2e0] border-none text-white"
+            type="submit"
+          >
             Submit
           </Button>
         </DialogFooter>

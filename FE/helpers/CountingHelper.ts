@@ -5,10 +5,12 @@ import {
 } from "../types/JobApplication";
 
 interface ICountingHelper {
-  data: ReceivedJobApplicationInfo[];
+  data?: ReceivedJobApplicationInfo[];
 }
 
 export function countingHelper({ data }: ICountingHelper) {
+  if (!data) return { numActive: 0, numTotal: 0, numResponseRate: 0 };
+
   const numActive = data.filter((app) =>
     activeStatuses.includes(app.status)
   ).length;
@@ -21,6 +23,8 @@ export function countingHelper({ data }: ICountingHelper) {
 }
 
 export function getStatusCounts({ data }: ICountingHelper) {
+  if (!data) return [];
+
   const statusConfig = {
     applied: "#1976d2", // MUI primary (blue)
     received_oa: "#0288d1", // MUI info (light blue)
@@ -47,6 +51,9 @@ export function getStatusCounts({ data }: ICountingHelper) {
 }
 
 export function getLast7DaysData({ data }: ICountingHelper) {
+  console.log(data);
+  if (!data) return [];
+
   const last7Days = Array.from({ length: 7 }, (_, i) => {
     const date = new Date();
     date.setDate(date.getDate() - (6 - i));

@@ -15,6 +15,7 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 
 def create_user_standard(db: Session, user: UserCreateStandard) -> str:
   user.password = hash_password(user.password)
+  print("🔔 THIS IS THE NEW USER: ", user)
   created_user_id = users_repository.create_user_standard(db, user)
   
   if not created_user_id:

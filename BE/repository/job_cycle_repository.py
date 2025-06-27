@@ -5,7 +5,7 @@ from models.job_cycle import JobCycle
 def create_job_cycle(db: Session, job_cycle: JobCycle) -> JobCycle:
   db.add(job_cycle)
   db.commit()
-  db.refresh(db)
+  db.refresh(job_cycle)
   return job_cycle
 
 def get_job_cycles(db: Session, user_id: int) -> Sequence[JobCycle]:
