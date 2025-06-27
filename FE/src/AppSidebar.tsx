@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useContext, useState } from "react";
 import { MoreHorizontal, LogOut, Edit2, Trash2, Plus } from "lucide-react";
 import {
@@ -20,63 +19,51 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AuthContext } from "./context/AuthContext";
+import type { JobCycleResponse } from "types/JobCycle";
+import { useDeleteJobCycle } from "./hooks/useDeleteJobCycle";
+import { useAddJobCycle } from "./hooks/useAddJobCycle";
+import { useEditJobCycle } from "./hooks/useEditJobCycle";
 
-export default function AppSidebar() {
+interface AppSidebarProps {
+  cycles: JobCycleResponse[];
+  activeCycleId: number;
+  setActiveCycleId: (id: number) => void;
+}
+
+export default function AppSidebar({
+  cycles,
+  activeCycleId,
+  setActiveCycleId,
+}: AppSidebarProps) {
   const auth = useContext(AuthContext);
-  // DUMMY DATA - Replace with your actual cycles state/hook
-  const [cycles, setCycles] = useState([
-    { id: 1, title: "Software Engineering 2025", active: true },
-    { id: 2, title: "Product Manager Roles", active: false },
-    { id: 3, title: "Frontend Developer", active: false },
-  ]);
+  const { mutate: deleteJobCycle } = useDeleteJobCycle();
+  const { mutate: addCycle } = useAddJobCycle();
+  const { mutate: renameCycle } = useEditJobCycle();
 
-  // LOCAL EDITING STATE - Keep this for inline editing functionality
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editingTitle, setEditingTitle] = useState("");
 
-  // ADD NEW CYCLE FUNCTION
-  const addNewCycle = () => {
-    // TODO: Replace with your addCycle hook/function
-    // Example: const { addCycle } = useCycles()
-    // addCycle({ title: "New Cycle" })
-
-    const newCycle = {
-      id: Date.now(), // Replace with proper ID generation
-      title: "New Cycle",
-      active: false,
-    };
-    setCycles([...cycles, newCycle]);
-
-    // Start editing the new cycle immediately
-    setEditingId(newCycle.id);
-    setEditingTitle(newCycle.title);
+  const handleAddCycle = () => {
+    addCycle({ name: "New Cycle" });
   };
 
   // DELETE CYCLE FUNCTION
-  const deleteCycle = (id: number) => {
-    // TODO: Replace with your deleteCycle hook/function
-    // Example: const { deleteCycle } = useCycles()
-    // deleteCycle(id)
-
-    setCycles(cycles.filter((cycle) => cycle.id !== id));
+  const handleDeleteCycle = (id: number) => {
+    if (cycles.length < 2) return; // do a sonner alert
+    deleteJobCycle(id);
   };
 
   // RENAME CYCLE FUNCTIONS
-  const startEditing = (cycle: { id: any; title: any; active?: boolean }) => {
+  const startEditing = (cycle: JobCycleResponse) => {
     setEditingId(cycle.id);
-    setEditingTitle(cycle.title);
+    setEditingTitle(cycle.name);
   };
 
   const saveEdit = (id: number) => {
-    // TODO: Replace with your renameCycle hook/function
-    // Example: const { renameCycle } = useCycles()
-    // renameCycle(id, editingTitle)
-
-    setCycles(
-      cycles.map((cycle) =>
-        cycle.id === id ? { ...cycle, title: editingTitle } : cycle
-      )
-    );
+    renameCycle({
+      jobCycleId: id,
+      updatedData: { name: editingTitle },
+    });
     setEditingId(null);
     setEditingTitle("");
   };
@@ -86,22 +73,13 @@ export default function AppSidebar() {
     setEditingTitle("");
   };
 
-  // SET ACTIVE CYCLE FUNCTION
-  const setActiveCycle = (id: number) => {
-    // TODO: Replace with your setActiveCycle hook/function
-    // Example: const { setActiveCycle } = useCycles()
-    // setActiveCycle(id)
-
-    setCycles(cycles.map((cycle) => ({ ...cycle, active: cycle.id === id })));
+  const handleSetActiveCycle = (id: number) => {
+    setActiveCycleId(id);
   };
 
   // SIGN OUT FUNCTION
   const handleSignOut = () => {
-    // TODO: Replace with your signOut hook/function
-    // Example: const { signOut } = useAuth()
-    // signOut()
-    auth?.logout();
-    console.log("Sign out clicked");
+    auth!.logout();
   };
 
   return (
@@ -113,7 +91,7 @@ export default function AppSidebar() {
             Auto Tracker
           </div>
           <div
-            onClick={addNewCycle}
+            onClick={handleAddCycle}
             className="flex items-center text-xl text-white font-semibold py-2 px-1 hover:bg-gray-800 cursor-pointer"
           >
             <Plus
@@ -128,7 +106,7 @@ export default function AppSidebar() {
         <SidebarGroup className="flex-1 overflow-hidden">
           <SidebarGroupContent className="h-full overflow-y-auto">
             <SidebarMenu>
-              {cycles.map((cycle) => (
+              {cycles.map((cycle: JobCycleResponse) => (
                 <SidebarMenuItem key={cycle.id}>
                   <div className="flex items-center w-full group">
                     {editingId === cycle.id ? (
@@ -150,17 +128,17 @@ export default function AppSidebar() {
                         <SidebarMenuButton
                           asChild
                           className={`flex-1 justify-start h-12 py-3 cursor-pointer ${
-                            cycle.active
-                              ? "bg-cyan-500/10 text-cyan-400 border-r-2 border-cyan-400"
+                            cycle.id === activeCycleId
+                              ? "bg-cyan-500/10 text-cyan-400 border-r-2 border-cyan-400 hover:bg-cyan-500/10 hover:text-cyan-400"
                               : "text-gray-300 hover:bg-gray-800 hover:text-white"
                           }`}
                         >
                           <button
                             className="w-full text-left h-full flex items-center"
-                            onClick={() => setActiveCycle(cycle.id)}
+                            onClick={() => handleSetActiveCycle(cycle.id)}
                           >
                             <span className="truncate text-lg">
-                              {cycle.title}
+                              {cycle.name}
                             </span>
                           </button>
                         </SidebarMenuButton>
@@ -178,12 +156,12 @@ export default function AppSidebar() {
                           </DropdownMenuTrigger>
                           <DropdownMenuContent
                             align="end"
-                            className="bg-gray-800 border-gray-700"
+                            className="bg-white border-gray-700"
                           >
                             {/* RENAME OPTION */}
                             <DropdownMenuItem
                               onClick={() => startEditing(cycle)}
-                              className="text-gray-300 hover:bg-gray-700 hover:text-white"
+                              className="cursor-pointer"
                             >
                               <Edit2 className="mr-2 h-4 w-4" />
                               Rename
@@ -191,8 +169,8 @@ export default function AppSidebar() {
 
                             {/* DELETE OPTION */}
                             <DropdownMenuItem
-                              onClick={() => deleteCycle(cycle.id)}
-                              className="text-red-400 hover:bg-red-500/10 hover:text-red-300"
+                              onClick={() => handleDeleteCycle(cycle.id)}
+                              className="text-red-400 cursor-pointer hover:!text-red-400"
                             >
                               <Trash2 className="mr-2 h-4 w-4" />
                               Delete

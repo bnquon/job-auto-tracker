@@ -1,10 +1,15 @@
 import CircularProgress from "@mui/material/CircularProgress";
-import Box from "@mui/material/Box";
 
-export default function Loading() {
+export default function Loading({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
   return (
-    <Box sx={{ display: "flex" }}>
+    <div 
+      className={`flex items-center justify-center w-full h-full ${className}`} 
+      {...props}
+    >
       <CircularProgress size="4rem" />
-    </Box>
+    </div>
   );
 }
