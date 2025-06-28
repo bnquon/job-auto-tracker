@@ -41,7 +41,7 @@ export const JobDashboard = () => {
   }
 
   return (
-    <div className="flex h-screen bg-gray-950">
+    <div className="flex h-screen w-screen bg-gray-950">
       {/* Sidebar */}
       <div className="flex-shrink-0 relative">
         <AppSidebar

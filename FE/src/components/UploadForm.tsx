@@ -1,5 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { Button } from "./ui/button";
+import { toast } from "sonner";
+import { Eye } from "lucide-react";
+import { ImagePreviewDialog } from "./dialogs/ImagePreviewDialog";
 
 interface UploadIconProps {
   className?: string;
@@ -10,24 +13,26 @@ interface UploadFormProps {
 }
 
 export default function UploadForm({ onConfirm }: UploadFormProps) {
-  const [files, setFiles] = useState<File[]>([]);
+  const [file, setFile] = useState<File | null>(null);
   const [isDragOver, setIsDragOver] = useState<boolean>(false);
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
+  const [isImagePreviewOpen, setIsImagePreviewOpen] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const dropZoneRef = useRef<HTMLDivElement>(null);
 
   const handleFileSelect = (selectedFiles: FileList | null): void => {
-    if (!selectedFiles) return;
+    if (!selectedFiles || selectedFiles.length === 0) return;
 
-    const validFiles = Array.from(selectedFiles).filter((file: File) => {
-      const fileType = file.type.toLowerCase();
-      return (
-        fileType === "image/jpeg" ||
-        fileType === "image/jpg" ||
-        fileType === "image/png"
-      );
-    });
-    setFiles(validFiles);
+    const selectedFile = selectedFiles[0];
+    const fileType = selectedFile.type.toLowerCase();
+
+    if (
+      fileType === "image/jpeg" ||
+      fileType === "image/jpg" ||
+      fileType === "image/png"
+    ) {
+      setFile(selectedFile);
+    }
   };
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>): void => {
@@ -63,17 +68,18 @@ export default function UploadForm({ onConfirm }: UploadFormProps) {
       if (items) {
         for (let i = 0; i < items.length; i++) {
           if (items[i].type.indexOf("image") !== -1) {
-            const file = items[i].getAsFile();
+            const pastedFile = items[i].getAsFile();
             if (
-              file &&
-              (file.type === "image/jpeg" ||
-                file.type === "image/jpg" ||
-                file.type === "image/png")
+              pastedFile &&
+              (pastedFile.type === "image/jpeg" ||
+                pastedFile.type === "image/jpg" ||
+                pastedFile.type === "image/png")
             ) {
-              const fileList = new DataTransfer();
-              fileList.items.add(file);
-              handleFileSelect(fileList.files);
+              setFile(pastedFile);
+              toast.success("File pasted");
               break;
+            } else {
+              toast.error("Invalid file type");
             }
           }
         }
@@ -86,12 +92,14 @@ export default function UploadForm({ onConfirm }: UploadFormProps) {
   }, []);
 
   const handleUpload = (): void => {
-    onConfirm(files[0]);
-    clearFiles();
+    if (file) {
+      onConfirm(file);
+      clearFile();
+    }
   };
 
-  const clearFiles = (): void => {
-    setFiles([]);
+  const clearFile = (): void => {
+    setFile(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -105,39 +113,57 @@ export default function UploadForm({ onConfirm }: UploadFormProps) {
             Upload Your File
           </h1>
 
-          <div className="relative w-full">
-            <div
-              ref={dropZoneRef}
-              className={`w-full bg-[#2a2a2a]/30 rounded-md border-2 border-dashed border-[#444] p-6 flex flex-col items-center justify-center space-y-4 cursor-pointer transition-all duration-200 ${
-                isDragOver
-                  ? "border-[#00d4ff] bg-[#00d4ff]/5 scale-105"
-                  : "hover:border-[#00d4ff] hover:bg-[#00d4ff]/5"
-              }`}
-              onDrop={handleDrop}
-              onDragOver={handleDragOver}
-              onDragLeave={handleDragLeave}
-              onClick={handleClick}
-              onMouseEnter={() => setShowTooltip(true)}
-              onMouseLeave={() => setShowTooltip(false)}
-            >
-              <UploadIcon
-                className={`h-12 w-12 transition-colors ${
-                  isDragOver ? "text-primary" : "text-muted-foreground"
+          <div className="relative w-full h-[200px]">
+            {file ? (
+              <div className="w-full h-full bg-[#2a2a2a]/30 rounded-md border-2 border-[#00d4ff] p-6 flex flex-col items-center justify-center space-y-4">
+                <div className="text-center space-y-2">
+                  <p className="text-white font-medium text-lg">{file.name}</p>
+                  <p className="text-gray-400">
+                    {(file.size / (1024 * 1024)).toFixed(2)} MB / 5.00 MB
+                  </p>
+                  <Button
+                    variant="default"
+                    className="cursor-pointer border-2 border-[#00d4ff] bg-transparent hover:bg-gray-700"
+                    onClick={() => setIsImagePreviewOpen(true)}
+                    size="sm"
+                  >
+                    <Eye /> View Image
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div
+                ref={dropZoneRef}
+                className={`w-full h-full bg-[#2a2a2a]/30 rounded-md border-2 border-dashed border-[#444] p-6 flex flex-col items-center justify-center space-y-4 cursor-pointer transition-all duration-200 ${
+                  isDragOver
+                    ? "border-[#00d4ff] bg-[#00d4ff]/5 scale-105"
+                    : "hover:border-[#00d4ff] hover:bg-[#00d4ff]/5"
                 }`}
-              />
-              <p className="text-white text-center">
-                Drag and drop your files here, click to upload, or paste from
-                clipboard
-              </p>
-              <input
-                ref={fileInputRef}
-                type="file"
-                className="hidden"
-                accept=".jpg,.jpeg,.png,image/jpeg,image/png"
-                multiple
-                onChange={handleFileInputChange}
-              />
-            </div>
+                onDrop={handleDrop}
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onClick={handleClick}
+                onMouseEnter={() => setShowTooltip(true)}
+                onMouseLeave={() => setShowTooltip(false)}
+              >
+                <UploadIcon
+                  className={`h-12 w-12 transition-colors ${
+                    isDragOver ? "text-primary" : "text-muted-foreground"
+                  }`}
+                />
+                <p className="text-white text-center">
+                  Drag and drop your file here, click to upload, or paste from
+                  clipboard
+                </p>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  className="hidden"
+                  accept=".jpg,.jpeg,.png,image/jpeg,image/png"
+                  onChange={handleFileInputChange}
+                />
+              </div>
+            )}
 
             {/* Tooltip */}
             {showTooltip && (
@@ -148,41 +174,17 @@ export default function UploadForm({ onConfirm }: UploadFormProps) {
             )}
           </div>
 
-          {/* File preview and upload section */}
-          {files.length > 0 && (
-            <div className="w-full space-y-4">
-              <div className="bg-[#444] rounded-md p-4">
-                <h3 className="font-medium text-white mb-2">Selected Files:</h3>
-                <div className="space-y-2">
-                  {files.map((file, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center justify-between text-sm"
-                    >
-                      <span className="truncate flex-1 text-white">
-                        {file.name}
-                      </span>
-                      <span className="ml-2 text-white">
-                        {(file.size / 1024 / 1024).toFixed(2)} MB
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
-
           <div className="flex justify-between w-full">
             <Button
-              disabled={files.length === 0}
-              onClick={clearFiles}
+              disabled={!file}
+              onClick={clearFile}
               variant="outline"
               className="cursor-pointer bg-[#555555] hover:bg-[#444444] hover:text-white text-white border-none"
             >
               Clear
             </Button>
             <Button
-              disabled={files.length === 0}
+              disabled={!file}
               onClick={handleUpload}
               className="cursor-pointer bg-[#00d4ff] hover:bg-[#00b2e0]"
             >
@@ -191,6 +193,15 @@ export default function UploadForm({ onConfirm }: UploadFormProps) {
           </div>
         </div>
       </div>
+
+      {/* Image Preview Dialog */}
+      {isImagePreviewOpen && file && (
+        <ImagePreviewDialog
+          open={isImagePreviewOpen}
+          onOpenChange={setIsImagePreviewOpen}
+          file={file}
+        />
+      )}
     </div>
   );
 }
