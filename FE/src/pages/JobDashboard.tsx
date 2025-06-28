@@ -63,8 +63,10 @@ export const JobDashboard = () => {
           </div>
 
           {/* Fixed grid layout */}
-          <div className="grid 2xl:grid-cols-[3fr_1fr] gap-6 w-full">
-            <TableWrapper data={data} />
+          <div className="flex gap-6 w-full 2xl:flex-row lg:flex-col">
+            <div className="2xl:max-w-3/4 w-full">
+              <TableWrapper data={data} />
+            </div>
             <div className="flex 2xl:flex-col gap-6">
               <ManualUploadWrapper currentCycleId={activeCycleId} />
               <UploadWrapper currentCycleId={activeCycleId} />

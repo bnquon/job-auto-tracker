@@ -209,61 +209,54 @@ export default function JobApplicationsDataGrid({
       field: "company_name",
       headerName: "Company",
       display: "flex",
-      flex: 1,
+      width: 200,
       renderCell: CompanyCell,
-      resizable: false,
     },
     {
       field: "title",
       headerName: "Job Title",
       display: "flex",
-      flex: 2,
+      width: 200,
       renderCell: TitleCell,
-      resizable: false,
     },
     {
       field: "status",
       headerName: "Status",
       display: "flex",
-      flex: 1,
+      width: 200,
       renderCell: StatusCell,
-      resizable: false,
     },
     {
       field: "link",
       headerName: "Link",
       display: "flex",
-      flex: 1.5,
+      width: 200,
       sortable: false,
       renderCell: LinkCell,
-      resizable: false,
     },
     {
       field: "applied_on",
       headerName: "Applied On",
       display: "flex",
-      flex: 1,
+      width: 200,
       renderCell: DateCell,
-      resizable: false,
     },
     {
       field: "notes",
       headerName: "Notes",
       display: "flex",
-      flex: 1,
+      width: 200,
       sortable: false,
       renderCell: NotesCell,
-      resizable: false,
     },
     {
       field: "actions",
       headerName: "Actions",
       display: "flex",
-      flex: 1,
       sortable: false,
+      width: 200,
       filterable: false,
       disableColumnMenu: true,
-      resizable: false,
       renderCell: (params: GridRenderCellParams) => (
         <ActionsCell row={params.row} onEdit={onEdit} onDelete={onDelete} />
       ),
@@ -283,7 +276,7 @@ export default function JobApplicationsDataGrid({
   }
 
   return (
-    <Box sx={{ height: "100%", minWidth: "0", position: "relative", flex: 1 }}>
+    <Box sx={{ height: "100%" }}>
       <DataGrid
         autoPageSize
         rows={data}
@@ -304,6 +297,7 @@ export default function JobApplicationsDataGrid({
           backgroundColor: "#1e1e1e",
           color: "#ffffff",
           height: "100%",
+          overflow: "auto",
 
           // Header styling
           "& .MuiDataGrid-columnHeaders": {
