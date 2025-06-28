@@ -1,11 +1,11 @@
 import { updateApplication } from "@/api/applications";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import type { UpdateJobApplicationInfo } from "types/JobApplication";
+import type { EditJobApplication } from "types/EditJobApplication";
 
 interface UpdateApplicationInput {
   jobId: number;
-  updatedData: UpdateJobApplicationInfo;
+  updatedData: EditJobApplication;
 }
 
 export function useUpdateApplication() {

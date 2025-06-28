@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import type { ManualJobApplication, ManualJobWithoutCycle } from "../../types/ManualJobApplication";
+import type { ManualJobWithoutCycle } from "../../types/ManualJobApplication";
 import { JobApplicationForm } from "./JobApplicationForm";
 import { Button } from "./ui/button";
 import { DialogFooter } from "./ui/dialog";

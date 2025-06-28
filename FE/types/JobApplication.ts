@@ -17,14 +17,6 @@ export const responseRateStatuses: ApplicationStatus[] = [
   "received_oa",
 ]
 
-export interface UpdateJobApplicationInfo {
-  company_name: string | null;
-  title: string | null;
-  status: ApplicationStatus | null;
-  link: string | null;
-  notes: string | null;
-}
-
 export interface ReceivedExtractedJobInfo {
   company_name: string | null;
   title: string | null;

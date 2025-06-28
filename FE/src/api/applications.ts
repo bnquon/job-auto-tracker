@@ -2,9 +2,9 @@ import { api } from "@/utils/axios";
 import type {
   ReceivedExtractedJobInfo,
   ReceivedJobApplicationInfo,
-  UpdateJobApplicationInfo,
 } from "types/JobApplication";
-import type { ManualJobApplication } from "types/ManualJobApplication";
+import type { EditJobApplication } from "types/EditJobApplication";
+import type { ManualJobApplicationObject } from "types/ManualJobApplication";
 
 export async function getJobApplicationsByCycle(jobCycleId: number): Promise<
   ReceivedJobApplicationInfo[]
@@ -15,7 +15,7 @@ export async function getJobApplicationsByCycle(jobCycleId: number): Promise<
 
 export async function updateApplication(
   jobId: number,
-  updatedData: UpdateJobApplicationInfo
+  updatedData: EditJobApplication
 ) {
   const { data } = await api.put(`/job_applications/${jobId}`, updatedData);
   return data;
@@ -37,7 +37,7 @@ export async function extractInfo(
   return data;
 }
 
-export async function addApplication(newJobInfo: ManualJobApplication) {
+export async function addApplication(newJobInfo: ManualJobApplicationObject) {
   const { data } = await api.post("/job_applications", newJobInfo);
   return data;
 }

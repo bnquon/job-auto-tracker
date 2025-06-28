@@ -1,6 +1,6 @@
+import type { manualAddJobApplicationWithoutCycleSchema } from "schemas/ManualAddJobSchema";
 import { z } from "zod";
-import { manualAddJobApplicationSchema } from "../schemas/ManualAddJobSchema";
 
-export type ManualJobApplication = z.infer<typeof manualAddJobApplicationSchema>;
+export type ManualJobWithoutCycle = z.infer<typeof manualAddJobApplicationWithoutCycleSchema>;
 
-export type ManualJobWithoutCycle = Omit<ManualJobApplication, "cycle_id">;
+export type ManualJobApplicationObject = ManualJobWithoutCycle & { cycle_id: number };
