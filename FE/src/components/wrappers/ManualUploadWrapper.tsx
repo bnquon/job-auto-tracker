@@ -1,10 +1,16 @@
 import { ManualJobApplication } from "../ManualJobApplication";
 import { BentoContainer } from "../shared/BentoContainer";
 
-export function ManualUploadWrapper() {
+interface ManualUploadWrapperProps {
+  currentCycleId: number;
+}
+
+export function ManualUploadWrapper({
+  currentCycleId,
+}: ManualUploadWrapperProps) {
   return (
     <BentoContainer>
-      <ManualJobApplication />
+      <ManualJobApplication currentCycleId={currentCycleId} />
     </BentoContainer>
-  )
+  );
 }

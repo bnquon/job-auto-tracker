@@ -4,20 +4,26 @@ import UploadForm from "../UploadForm";
 import { EditJobApplicationDialog } from "../dialogs/EditJobApplicationDialog";
 import { useExtractInfo } from "@/hooks/useExtractInfo";
 import { useAddApplication } from "@/hooks/useAddApplication";
-import type { EditJobApplication } from "types/EditJobApplication";
+import Loading from "../Loading";
+import type { ManualJobWithoutCycle } from "types/ManualJobApplication";
 
-export function UploadWrapper() {
+interface UploadWrapperProps {
+  currentCycleId: number;
+}
+
+export function UploadWrapper({ currentCycleId }: UploadWrapperProps) {
   const [extractInfoModalOpen, setExtractInfoModalOpen] = useState(false);
-  const { mutate: extractInfo, data } = useExtractInfo();
-  const { mutate: addJob } = useAddApplication();
+  const { mutate: extractInfo, data, isPending } = useExtractInfo();
+  const { mutate: addJob, isPending: isAdding } = useAddApplication();
 
   const onUploadConfirm = (file: File) => {
     extractInfo(file);
     setExtractInfoModalOpen(true);
   };
 
-  const onSubmitConfirm = (data: EditJobApplication) => {
-    addJob(data);
+  const onSubmitConfirm = (data: ManualJobWithoutCycle) => {
+    console.log(data, currentCycleId);
+    addJob({ ...data, cycle_id: currentCycleId });
     setExtractInfoModalOpen(false);
   };
 
@@ -40,8 +46,11 @@ export function UploadWrapper() {
             status: "applied",
             notes: "",
           }}
+          isPending={isAdding}
         />
       )}
+
+      {isPending && <Loading loadingText="Extracting info" />}
     </>
   );
 }

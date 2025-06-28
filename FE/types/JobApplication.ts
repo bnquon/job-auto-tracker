@@ -40,4 +40,5 @@ export interface ReceivedJobApplicationInfo {
   updated_at: string;
   applied_on: string;
   status: ApplicationStatus;
+  cycle_id: number;
 }

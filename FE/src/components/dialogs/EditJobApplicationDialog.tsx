@@ -11,8 +11,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 import type { EditJobApplication } from "../../../types/EditJobApplication";
-import { editJobApplicationSchema } from "../../../schemas/EditJobSchema";
 import { JobApplicationForm } from "../JobApplicationForm";
+import {  manualAddJobApplicationWithoutCycleSchema } from "../../../schemas/ManualAddJobSchema";
+import type { ManualJobWithoutCycle } from "../../../types/ManualJobApplication";
+import Loading from "../Loading";
 
 interface EditJobApplicationDialogProps {
   title: string;
@@ -20,8 +22,9 @@ interface EditJobApplicationDialogProps {
   confirmText: string;
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSubmit: (data: EditJobApplication) => void;
+  onSubmit: (data: ManualJobWithoutCycle) => void;
   application: EditJobApplication | null;
+  isPending: boolean;
 }
 
 export function EditJobApplicationDialog({
@@ -32,6 +35,7 @@ export function EditJobApplicationDialog({
   onOpenChange,
   onSubmit,
   application,
+  isPending,
 }: EditJobApplicationDialogProps) {
   const {
     register,
@@ -40,12 +44,12 @@ export function EditJobApplicationDialog({
     setValue,
     watch,
     reset,
-  } = useForm<EditJobApplication>({
-    resolver: zodResolver(editJobApplicationSchema),
+  } = useForm<ManualJobWithoutCycle>({
+    resolver: zodResolver(manualAddJobApplicationWithoutCycleSchema),
     mode: "onSubmit",
   });
 
-  const handleFormSubmit = (data: EditJobApplication) => {
+  const handleFormSubmit = (data: ManualJobWithoutCycle) => {
     onSubmit(data);
     onOpenChange(false);
   };
@@ -58,10 +62,11 @@ export function EditJobApplicationDialog({
   useEffect(() => {
     if (application) {
       reset({
-        company_name: application.company_name,
-        title: application.title,
-        link: application.link,
+        company_name: application.company_name ?? undefined,
+        title: application.title ?? undefined,
+        link: application.link ?? undefined,
         status: application.status,
+        notes: application.notes ?? undefined,
       });
     }
   }, [application, reset]);
@@ -72,13 +77,13 @@ export function EditJobApplicationDialog({
         className="sm:max-w-[425px] bg-[#1e1e1e] border-none [&>button]:text-white [&>button]:hover:text-white [&>button]:hover:bg-[#333333]"
         onOpenAutoFocus={(e) => e.preventDefault()}
       >
+        {isPending && <Loading variant="overlay" />}
         <DialogHeader>
           <DialogTitle className="text-[#00d4ff] text-xl">{title}</DialogTitle>
           <DialogDescription className="text-[#ccc]">
             {subTitle}
           </DialogDescription>
         </DialogHeader>
-
         <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4">
           <JobApplicationForm
             register={register}
@@ -86,7 +91,6 @@ export function EditJobApplicationDialog({
             setValue={setValue}
             watch={watch}
           />
-
           <DialogFooter className="flex justify-between w-full">
             <Button
               type="button"

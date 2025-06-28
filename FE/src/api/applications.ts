@@ -4,6 +4,7 @@ import type {
   ReceivedJobApplicationInfo,
   UpdateJobApplicationInfo,
 } from "types/JobApplication";
+import type { ManualJobApplication } from "types/ManualJobApplication";
 
 export async function getJobApplicationsByCycle(jobCycleId: number): Promise<
   ReceivedJobApplicationInfo[]
@@ -36,7 +37,7 @@ export async function extractInfo(
   return data;
 }
 
-export async function addApplication(newJobInfo: UpdateJobApplicationInfo) {
+export async function addApplication(newJobInfo: ManualJobApplication) {
   const { data } = await api.post("/job_applications", newJobInfo);
   return data;
 }

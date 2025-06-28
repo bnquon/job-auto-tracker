@@ -7,21 +7,28 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import type { EditJobApplication } from "types/EditJobApplication";
+import { type ReactNode } from "react";
+import Loading from "../Loading";
 
-interface DeleteJobApplicationDialogProps {
+interface DeleteDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onConfirm: () => void;
-  application: EditJobApplication | null;
+  title: string;
+  description: ReactNode;
+  confirmText?: string;
+  isPending: boolean;
 }
 
-export function DeleteJobApplicationDialog({
+export function DeleteDialog({
   open,
   onOpenChange,
   onConfirm,
-  application,
-}: DeleteJobApplicationDialogProps) {
+  title,
+  description,
+  confirmText = "Delete",
+  isPending,
+}: DeleteDialogProps) {
   const handleConfirm = () => {
     onConfirm();
     onOpenChange(false);
@@ -34,19 +41,11 @@ export function DeleteJobApplicationDialog({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px] bg-[#1e1e1e] border-none [&>button]:text-white [&>button]:hover:text-white [&>button]:hover:bg-[#333333]">
+        {isPending && <Loading variant="fullscreen" />}
         <DialogHeader>
-          <DialogTitle className="text-[#00d4ff] text-xl">
-            Delete Job Application
-          </DialogTitle>
+          <DialogTitle className="text-[#00d4ff] text-xl">{title}</DialogTitle>
           <DialogDescription className="text-white">
-            Are you sure you want to delete this job application{" "}
-            {application?.company_name && application.title && (
-              <>
-                for <strong>{application.title}</strong> at{" "}
-                <strong>{application.company_name}</strong>
-              </>
-            )}
-            ? This action cannot be undone.
+            {description}
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="flex justify-between w-full">
@@ -58,7 +57,7 @@ export function DeleteJobApplicationDialog({
             Cancel
           </Button>
           <Button variant="destructive" onClick={handleConfirm}>
-            Delete
+            {confirmText}
           </Button>
         </DialogFooter>
       </DialogContent>

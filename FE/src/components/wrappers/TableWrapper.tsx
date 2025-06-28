@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { ReceivedJobApplicationInfo } from "types/JobApplication";
 import { BentoContainer } from "../shared/BentoContainer";
 import JobApplicationsDataGrid from "../JobApplicationsDataGrid";
-import { DeleteJobApplicationDialog } from "../dialogs/DeleteJobApplicationDialog";
+import { DeleteDialog } from "../dialogs/DeleteDialog";
 import { EditJobApplicationDialog } from "../dialogs/EditJobApplicationDialog";
 import type { EditJobApplication } from "types/EditJobApplication";
 import { useUpdateApplication } from "@/hooks/useUpdateApplication";
@@ -18,8 +18,21 @@ export const TableWrapper = ({ data = [] }: ITableWrapper) => {
   const [selectedApp, setSelectedApp] =
     useState<ReceivedJobApplicationInfo | null>(null);
 
-  const { mutate: updateJob } = useUpdateApplication();
-  const { mutate: deleteJob } = useDeleteApplication();
+  const deleteText = (
+    <>
+      Are you sure you want to delete this job application{" "}
+      {selectedApp?.company_name && selectedApp.title && (
+        <>
+          for <strong>{selectedApp.title}</strong> at{" "}
+          <strong>{selectedApp.company_name}</strong>
+        </>
+      )}
+      ? This action cannot be undone.
+    </>
+  );
+
+  const { mutate: updateJob, isPending: isUpdating } = useUpdateApplication();
+  const { mutate: deleteJob, isPending } = useDeleteApplication();
 
   const handleEdit = (id: number) => {
     const app = data.find((app) => app.id === id);
@@ -48,14 +61,23 @@ export const TableWrapper = ({ data = [] }: ITableWrapper) => {
   return (
     <>
       <BentoContainer>
-        <p className="text-2xl text-[#00d4ff] font-bold mb-4">Job Applications</p>
-        <JobApplicationsDataGrid data={data} onEdit={handleEdit} onDelete={handleDelete} />
+        <p className="text-2xl text-[#00d4ff] font-bold mb-4">
+          Job Applications
+        </p>
+        <JobApplicationsDataGrid
+          data={data}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+        />
       </BentoContainer>
-      <DeleteJobApplicationDialog
+
+      <DeleteDialog
         open={deleteDialogOpen}
         onOpenChange={setDeleteDialogOpen}
         onConfirm={handleConfirmDelete}
-        application={selectedApp}
+        title="Delete Job Application"
+        description={deleteText}
+        isPending={isPending}
       />
 
       <EditJobApplicationDialog
@@ -66,6 +88,7 @@ export const TableWrapper = ({ data = [] }: ITableWrapper) => {
         onOpenChange={setEditDialogOpen}
         onSubmit={handleEditSubmit}
         application={selectedApp}
+        isPending={isUpdating}
       />
     </>
   );

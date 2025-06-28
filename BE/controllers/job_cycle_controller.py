@@ -1,5 +1,3 @@
-# controllers/job_cycle_controller.py
-
 from typing import Sequence
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
@@ -37,7 +35,7 @@ def delete_job_cycle_route(
 ):
   return service.delete_job_cycle(db, job_cycle_id, user_id)
 
-@router.put("/{job_cycle_id}", response_model=JobCycleResponse)
+@router.put("/{job_cycle_id}", status_code=status.HTTP_200_OK)
 def edit_job_cycle_name_route(
   job_cycle_id: int,
   job_cycle_updates: JobCycleCreate,

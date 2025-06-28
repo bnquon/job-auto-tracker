@@ -1,13 +1,18 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import type { ManualJobApplication } from "../../types/ManualJobApplication";
+import type { ManualJobApplication, ManualJobWithoutCycle } from "../../types/ManualJobApplication";
 import { JobApplicationForm } from "./JobApplicationForm";
 import { Button } from "./ui/button";
 import { DialogFooter } from "./ui/dialog";
 import { useAddApplication } from "@/hooks/useAddApplication";
-import { manualAddJobApplicationSchema } from "../../schemas/ManualAddJobSchema";
+import { manualAddJobApplicationWithoutCycleSchema } from "../../schemas/ManualAddJobSchema";
+import Loading from "./Loading";
 
-export function ManualJobApplication() {
+interface ManualJobApplicationProps {
+  currentCycleId: number;
+}
+
+export function ManualJobApplication({ currentCycleId }: ManualJobApplicationProps) {
   const {
     register,
     handleSubmit,
@@ -15,15 +20,15 @@ export function ManualJobApplication() {
     setValue,
     watch,
     reset,
-  } = useForm<ManualJobApplication>({
-    resolver: zodResolver(manualAddJobApplicationSchema),
+  } = useForm<ManualJobWithoutCycle>({
+    resolver: zodResolver(manualAddJobApplicationWithoutCycleSchema),
     mode: "onSubmit",
   });
 
-  const { mutate: addJob } = useAddApplication();
+  const { mutate: addJob, isPending } = useAddApplication();
 
-  const handleFormSubmit = (data: ManualJobApplication) => {
-    addJob(data);
+  const handleFormSubmit = (data: ManualJobWithoutCycle) => {
+    addJob({ ...data, cycle_id: currentCycleId });
     reset({
       company_name: "",
       title: "",
@@ -75,6 +80,8 @@ export function ManualJobApplication() {
           </Button>
         </DialogFooter>
       </form>
+
+      {isPending && <Loading loadingText="Adding job application"/>}
     </>
   );
 }

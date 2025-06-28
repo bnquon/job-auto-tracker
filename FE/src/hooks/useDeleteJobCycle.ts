@@ -1,5 +1,6 @@
 import { deleteJobCycle } from "@/api/cycles";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 export const useDeleteJobCycle = () => {
   const queryClient = useQueryClient();
@@ -10,6 +11,7 @@ export const useDeleteJobCycle = () => {
       queryClient.invalidateQueries({
         queryKey: ["jobCycle"],
       });
+      toast.success("Cycle deleted");
     },
-  })
+  });
 };

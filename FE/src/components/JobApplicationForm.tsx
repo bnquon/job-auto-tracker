@@ -10,16 +10,16 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import type { UseFormRegister, FieldErrors, UseFormSetValue, UseFormWatch } from "react-hook-form";
 import type { ApplicationStatus } from "../../types/JobApplication";
-import type { ManualJobApplication } from "types/ManualJobApplication";
+import type { ManualJobWithoutCycle } from "types/ManualJobApplication";
 
 interface JobApplicationFormProps {
-  register: UseFormRegister<ManualJobApplication>;
-  errors: FieldErrors<ManualJobApplication>;
-  setValue: UseFormSetValue<ManualJobApplication>;
-  watch: UseFormWatch<ManualJobApplication>;
+  register: UseFormRegister<ManualJobWithoutCycle>;
+  errors: FieldErrors<ManualJobWithoutCycle>;
+  setValue: UseFormSetValue<ManualJobWithoutCycle>;
+  watch: UseFormWatch<ManualJobWithoutCycle>;
 }
 
-const statusOptions: { value: ApplicationStatus; label: string }[] = [
+const statusOptions: { value: ApplicationStatus | ""; label: string }[] = [
   { value: "applied", label: "Applied" },
   { value: "received_oa", label: "Received OA" },
   { value: "rejected", label: "Rejected" },

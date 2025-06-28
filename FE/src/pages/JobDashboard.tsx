@@ -66,8 +66,8 @@ export const JobDashboard = () => {
           <div className="grid grid-cols-[3fr_1fr] gap-6 w-full">
             <TableWrapper data={data} />
             <div className="flex flex-col gap-6">
-              <ManualUploadWrapper />
-              <UploadWrapper />
+              <ManualUploadWrapper currentCycleId={activeCycleId} />
+              <UploadWrapper currentCycleId={activeCycleId} />
             </div>
           </div>
 

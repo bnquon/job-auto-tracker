@@ -7,6 +7,7 @@ import { AuthContext } from "./context/AuthContext";
 import { useContext } from "react";
 import { AuthProvider } from "./context/AuthProvider";
 import { SidebarProvider } from "./components/ui/sidebar";
+import { Toaster } from "sonner";
 
 const queryClient = new QueryClient();
 
@@ -50,6 +51,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
+        <Toaster richColors position="top-center" closeButton />
         <AppRoutes />
       </AuthProvider>
     </QueryClientProvider>

@@ -1,5 +1,6 @@
 import { editJobCycle } from "@/api/cycles";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 import type { UpdateJobCycle } from "types/JobCycle";
 
 interface UpdateJobCycleInput {
@@ -17,6 +18,7 @@ export const useEditJobCycle = () => {
       queryClient.invalidateQueries({
         queryKey: ["jobCycle"],
       });
+      toast.success("Cycle name updated");
     },
   });
 };

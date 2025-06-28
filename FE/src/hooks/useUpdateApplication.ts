@@ -1,5 +1,6 @@
 import { updateApplication } from "@/api/applications";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 import type { UpdateJobApplicationInfo } from "types/JobApplication";
 
 interface UpdateApplicationInput {
@@ -17,6 +18,7 @@ export function useUpdateApplication() {
       queryClient.invalidateQueries({
         queryKey: ["applications"],
       });
+      toast.success("Application updated");
     },
   });
 }
