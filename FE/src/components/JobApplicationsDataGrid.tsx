@@ -210,59 +210,60 @@ export default function JobApplicationsDataGrid({
       headerName: "Company",
       display: "flex",
       flex: 1,
-      minWidth: 140,
       renderCell: CompanyCell,
+      resizable: false,
     },
     {
       field: "title",
       headerName: "Job Title",
       display: "flex",
       flex: 2,
-      minWidth: 200,
       renderCell: TitleCell,
+      resizable: false,
     },
     {
       field: "status",
       headerName: "Status",
       display: "flex",
       flex: 1,
-      minWidth: 210,
       renderCell: StatusCell,
+      resizable: false,
     },
     {
       field: "link",
       headerName: "Link",
       display: "flex",
       flex: 1.5,
-      minWidth: 150,
       sortable: false,
       renderCell: LinkCell,
+      resizable: false,
     },
     {
       field: "applied_on",
       headerName: "Applied On",
       display: "flex",
       flex: 1,
-      minWidth: 120,
       renderCell: DateCell,
+      resizable: false,
     },
     {
       field: "notes",
       headerName: "Notes",
       display: "flex",
       flex: 1,
-      minWidth: 180,
       sortable: false,
       renderCell: NotesCell,
+      resizable: false,
     },
     {
       field: "actions",
       headerName: "Actions",
       display: "flex",
-      width: 90,
+      flex: 1,
       sortable: false,
       filterable: false,
       disableColumnMenu: true,
+      resizable: false,
       renderCell: (params: GridRenderCellParams) => (
         <ActionsCell row={params.row} onEdit={onEdit} onDelete={onDelete} />
       ),
@@ -282,8 +283,9 @@ export default function JobApplicationsDataGrid({
   }
 
   return (
-    <Box sx={{ width: "100%", height: "100%", backgroundColor: "#1a1a1a" }}>
+    <Box sx={{ height: "100%", minWidth: "0", position: "relative", flex: 1 }}>
       <DataGrid
+        autoPageSize
         rows={data}
         columns={columns}
         initialState={{

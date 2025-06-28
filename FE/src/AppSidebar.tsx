@@ -96,7 +96,7 @@ export default function AppSidebar({
 
   return (
     <>
-      <Sidebar className="border-r border-gray-800 w-80">
+      <Sidebar className="border-r border-gray-800 2xl:w-80 lg:w-60">
         <SidebarContent className="bg-[#1e1e1e] flex flex-col h-full">
           {/* FIXED HEADER WITH ADD BUTTON */}
           <div className="flex flex-col justify-between px-2 py-1 mb-8 gap-8 flex-shrink-0">

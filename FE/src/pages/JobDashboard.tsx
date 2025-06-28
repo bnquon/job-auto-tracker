@@ -24,7 +24,6 @@ export const JobDashboard = () => {
   }, [cycles]);
 
   const { data, isLoading } = useJobApplicationsByCycle(activeCycleId);
-
   const { numActive, numTotal, numResponseRate } = useMemo(
     () => countingHelper({ data }),
     [data]
@@ -53,7 +52,7 @@ export const JobDashboard = () => {
 
       {/* Main Content */}
       <div className="flex-1 overflow-auto relative">
-        <div className="w-3/4 mx-auto min-h-full p-6 space-y-6">
+        <div className="2xl:w-3/4 lg:w-4/5 mx-auto min-h-full p-6 space-y-6">
           {/* Overview blocks - full width of container */}
           <div className="w-full">
             <OverviewWrapper
@@ -63,15 +62,16 @@ export const JobDashboard = () => {
             />
           </div>
 
-          <div className="grid grid-cols-[3fr_1fr] gap-6 w-full">
+          {/* Fixed grid layout */}
+          <div className="grid 2xl:grid-cols-[3fr_1fr] gap-6 w-full">
             <TableWrapper data={data} />
-            <div className="flex flex-col gap-6">
+            <div className="flex 2xl:flex-col gap-6">
               <ManualUploadWrapper currentCycleId={activeCycleId} />
               <UploadWrapper currentCycleId={activeCycleId} />
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-6 w-full">
+          <div className="grid 2xl:grid-cols-2 gap-6 w-full">
             <ApplicationStatusChart data={pieChartData} />
             <ApplicationsLineChart data={lineChartData} />
           </div>

@@ -10,6 +10,7 @@ import { LoginSchema } from "../../schemas/LoginSchema";
 import type { LoginData } from "../../types/LoginData";
 import { AuthContext } from "@/context/AuthContext";
 import { useContext } from "react";
+import { toast } from "sonner";
 
 export function LoginForm({
   className,
@@ -32,7 +33,7 @@ export function LoginForm({
       auth?.checkAuth();
       navigate("/app");
     }
-    // use a toast popup or something to say login failed
+    toast.error("Login failed");
   }
 
   return (

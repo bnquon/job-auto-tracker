@@ -10,6 +10,7 @@ import { SignUpSchema } from "../../schemas/SignUpSchema";
 import type { SignUpData } from "../../types/SignUpData";
 import { AuthContext } from "@/context/AuthContext";
 import { useContext } from "react";
+import { toast } from "sonner";
 
 export function SignUpForm({
   className,
@@ -37,7 +38,7 @@ export function SignUpForm({
       auth?.checkAuth();
       navigate("/app");
     }
-    // use a toast popup or something to say signup failed
+    toast.error("Sign up failed");
   }
 
   return (
