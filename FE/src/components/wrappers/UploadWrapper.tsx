@@ -22,7 +22,6 @@ export function UploadWrapper({ currentCycleId }: UploadWrapperProps) {
   };
 
   const onSubmitConfirm = (data: ManualJobWithoutCycle) => {
-    console.log(data, currentCycleId);
     addJob({ ...data, cycle_id: currentCycleId });
     setExtractInfoModalOpen(false);
   };

@@ -32,6 +32,7 @@ export default function UploadForm({ onConfirm }: UploadFormProps) {
       fileType === "image/png"
     ) {
       setFile(selectedFile);
+      toast.success("File selected");
     }
   };
 
