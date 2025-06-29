@@ -24,7 +24,7 @@ export const SignUp = () => {
           <p className="text-[30px] leading-[1.2] font-semibold mb-16 w-[85%] text-center text-[#1e1e1e]">
             No more filling in template forms or spreadsheet columns
           </p>
-          <div className="w-[85%] relative">
+          <div className="w-[90%] relative">
             <video
               src="/SSAutoDashboardVideoDemo.mp4"
               muted

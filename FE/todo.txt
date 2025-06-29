@@ -1,2 +1,2 @@
 Maybe on click on certain cells it pops up the value if its overflowed like notes
-Need to update the login and signup page images
+Migrate to production database and deployments
