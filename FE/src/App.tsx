@@ -51,7 +51,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <Toaster richColors position="top-center" closeButton />
+        <Toaster richColors position="top-center" />
         <AppRoutes />
       </AuthProvider>
     </QueryClientProvider>

@@ -67,7 +67,7 @@ export const JobDashboard = () => {
             <div className="2xl:w-3/4 w-full">
               <TableWrapper data={data} />
             </div>
-            <div className="flex 2xl:flex-col gap-6 w-full">
+            <div className="flex 2xl:flex-col gap-6 w-full 2xl:max-w-1/4">
               <ManualUploadWrapper currentCycleId={activeCycleId} />
               <UploadWrapper currentCycleId={activeCycleId} />
             </div>

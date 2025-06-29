@@ -12,9 +12,10 @@ import {
 import {
   ChevronUp,
   ChevronDown,
-  EllipsisVertical,
   Search,
   Check,
+  Edit,
+  Trash2,
 } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Button } from "./ui/button";
@@ -71,11 +72,18 @@ const StatusMultiSelect = ({
           aria-expanded={open}
           className="w-[280px] justify-between bg-gray-700 border-gray-600 text-white hover:bg-gray-600 hover:text-white"
         >
-          {value.length === 0
-            ? "Filter by Status"
-            : `${value.length} status${
-                value.length === 1 ? "" : "es"
-              } selected`}
+          <span>
+            {value.length === 0
+              ? "Filter by Status"
+              : `${value.length} status${
+                  value.length === 1 ? "" : "es"
+                } selected`}
+          </span>
+          {open ? (
+            <ChevronUp className="h-4 w-4 opacity-50" />
+          ) : (
+            <ChevronDown className="h-4 w-4 opacity-50" />
+          )}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[280px] p-0 bg-white">
@@ -148,65 +156,9 @@ const StatusChip = ({ status }: { status: ApplicationStatus }) => {
   );
 };
 
-// Action menu component
-const ActionMenu = ({
-  row,
-  onEdit,
-  onDelete,
-}: {
-  row: ReceivedJobApplicationInfo;
-  onEdit: (id: number) => void;
-  onDelete: (id: number) => void;
-}) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <div className="relative w-fit">
-      <Button
-        onClick={() => setIsOpen(!isOpen)}
-        className="p-2 text-cyan-400 hover:bg-gray-700 rounded-lg transition-colors"
-        variant="ghost"
-      >
-        <EllipsisVertical size={18} />
-      </Button>
-
-      {isOpen && (
-        <>
-          <div
-            className="fixed inset-0 z-10"
-            onClick={() => setIsOpen(false)}
-          />
-          <div className="absolute right-0 top-8 z-20 bg-white rounded-lg shadow-lg border min-w-32">
-            <Button
-              onClick={() => {
-                onEdit(row.id);
-                setIsOpen(false);
-              }}
-              className="w-full px-3 py-2 text-sm text-left hover:bg-gray-100 rounded-t-lg text-gray-700"
-              variant="ghost"
-            >
-              Edit
-            </Button>
-            <Button
-              onClick={() => {
-                onDelete(row.id);
-                setIsOpen(false);
-              }}
-              className="w-full px-3 py-2 text-sm text-left hover:bg-gray-100 rounded-b-lg text-red-500"
-              variant="ghost"
-            >
-              Delete
-            </Button>
-          </div>
-        </>
-      )}
-    </div>
-  );
-};
-
 // Empty state component
 const EmptyState = () => (
-  <div className="flex flex-col items-center justify-center h-64 text-gray-400">
+  <div className="flex flex-col items-center justify-center h-full w-full text-gray-400">
     <div className="text-lg font-semibold mb-2">No applications yet</div>
     <div className="text-sm">
       Start tracking your job applications by adding your first application
@@ -234,6 +186,7 @@ export default function JobApplicationsTable({
           </div>
         ),
         filterFn: "includesString",
+        size: 250,
       }),
       columnHelper.accessor("title", {
         header: "Job Title",
@@ -241,6 +194,7 @@ export default function JobApplicationsTable({
           <div className="text-white text-lg truncate">{getValue()}</div>
         ),
         filterFn: "includesString",
+        size: 200,
       }),
       columnHelper.accessor("status", {
         header: "Status",
@@ -249,6 +203,7 @@ export default function JobApplicationsTable({
           if (!value || value.length === 0) return true;
           return value.includes(row.getValue(columnId));
         },
+        size: 150,
       }),
       columnHelper.accessor("link", {
         header: "Link",
@@ -262,21 +217,23 @@ export default function JobApplicationsTable({
               href={value}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-cyan-400 underline text-lg font-medium hover:text-cyan-300 truncate block max-w-full"
+              className="text-cyan-400 underline text-lg font-medium hover:text-cyan-300 block truncate"
             >
-              {value.length > 20 ? `${value.substring(0, 20)}...` : value}
+              {value}
             </a>
           );
         },
         enableSorting: false,
+        size: 200,
       }),
       columnHelper.accessor("applied_on", {
         header: "Applied On",
         cell: ({ getValue }) => (
-          <div className="text-gray-300 text-lg">
+          <div className="text-gray-300 text-lg truncate">
             {new Date(getValue()).toLocaleDateString()}
           </div>
         ),
+        size: 150,
       }),
       columnHelper.accessor("notes", {
         header: "Notes",
@@ -286,20 +243,35 @@ export default function JobApplicationsTable({
           </div>
         ),
         enableSorting: false,
+        size: 170,
       }),
       columnHelper.display({
         id: "actions",
         header: "Actions",
         cell: ({ row }) => (
-          <div className="w-fit">
-            <ActionMenu
-              row={row.original}
-              onEdit={onEdit}
-              onDelete={onDelete}
-            />
+          <div className="flex items-center">
+            <Button
+              onClick={() => onEdit(row.original.id)}
+              className="text-cyan-400 hover:bg-gray-600 hover:text-cyan-500 cursor-pointer rounded-lg transition-colors p-2"
+              variant="ghost"
+              size="sm"
+              title="Edit application"
+            >
+              <Edit size={16} />
+            </Button>
+            <Button
+              onClick={() => onDelete(row.original.id)}
+              className="text-red-400 hover:bg-gray-600 hover:text-red-50 cursor-pointer rounded-lg transition-colors p-2"
+              variant="ghost"
+              size="sm"
+              title="Delete application"
+            >
+              <Trash2 size={16} />
+            </Button>
           </div>
         ),
         enableSorting: false,
+        size: 92,
       }),
     ],
     [onEdit, onDelete, columnHelper]
@@ -329,14 +301,24 @@ export default function JobApplicationsTable({
   const statusFilter =
     (table.getColumn("status")?.getFilterValue() as string[]) || [];
 
+  // Calculate total width for consistent grid layout
+  const totalWidth = columns.reduce((acc, col) => acc + (col.size || 150), 0);
+  const gridTemplateColumns = columns
+    .map((col) => `${col.size || 150}px`)
+    .join(" ");
+
   if (data.length === 0) {
-    return <EmptyState />;
+    return (
+      <div className="w-full h-full">
+        <EmptyState />
+      </div>
+    );
   }
 
   return (
     <div className="w-full h-full text-white flex flex-col">
       {/* Search and Filters */}
-      <div className="py-4 border-b border-gray-700">
+      <div className="py-4 border-b shrink-0 border-gray-700">
         <div className="flex flex-wrap gap-4 items-center">
           {/* Global Search */}
           <div className="relative flex-1 min-w-64">
@@ -347,7 +329,7 @@ export default function JobApplicationsTable({
             <Input
               value={globalFilter ?? ""}
               onChange={(e) => setGlobalFilter(e.target.value)}
-              placeholder="Search by company name or job title..."
+              placeholder="Search by company name, job title, status, notes, or link..."
               className="w-full pl-10 pr-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
             />
           </div>
@@ -378,20 +360,23 @@ export default function JobApplicationsTable({
         </div>
       </div>
 
-      {/* Table */}
-      <div className="overflow-auto flex-1">
-        <table className="w-full">
-          <thead>
+      {/* Table Container - Horizontal scroll for entire table */}
+      <div className="flex-1 overflow-x-auto">
+        <div style={{ minWidth: `${totalWidth}px`, width: "100%" }}>
+          {/* Table Header - Fixed, no vertical scroll */}
+          <div className="bg-gray-800 border-b border-gray-700">
             {table.getHeaderGroups().map((headerGroup) => (
-              <tr
+              <div
                 key={headerGroup.id}
-                className="bg-gray-800 border-b border-gray-700"
+                className="grid w-full"
+                style={{
+                  gridTemplateColumns: gridTemplateColumns,
+                }}
               >
                 {headerGroup.headers.map((header) => (
-                  <th
+                  <div
                     key={header.id}
                     className="px-3 py-4 text-left text-cyan-400 font-semibold text-base tracking-wide"
-                    style={{ minWidth: "200px" }}
                   >
                     <div className="flex items-center gap-2">
                       {header.isPlaceholder ? null : (
@@ -432,15 +417,25 @@ export default function JobApplicationsTable({
                         </>
                       )}
                     </div>
-                  </th>
+                  </div>
                 ))}
-              </tr>
+              </div>
             ))}
-          </thead>
-          <tbody>
-            {table.getRowModel().rows.length === 0 ? (
-              <tr>
-                <td colSpan={columns.length} className="px-3 py-16 text-center">
+          </div>
+
+          {/* Table Body - Vertical scroll only with LEFT scrollbar */}
+          <div
+            className="overflow-y-auto"
+            style={{
+              maxHeight: "720px",
+              direction: "rtl", // This moves scrollbar to left
+            }}
+          >
+            <div style={{ direction: "ltr" }}>
+              {" "}
+              {/* This keeps content flowing left-to-right */}
+              {table.getRowModel().rows.length === 0 ? (
+                <div className="flex items-center justify-center h-32">
                   <div className="flex flex-col items-center justify-center text-gray-400">
                     <div className="text-lg font-semibold mb-2">
                       No matching applications found
@@ -449,31 +444,37 @@ export default function JobApplicationsTable({
                       Try adjusting your search or filter criteria
                     </div>
                   </div>
-                </td>
-              </tr>
-            ) : (
-              table.getRowModel().rows.map((row) => (
-                <tr
-                  key={row.id}
-                  className="border-b border-gray-800 hover:bg-gray-800 transition-colors"
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id} className="px-3 py-4">
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </td>
-                  ))}
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+                </div>
+              ) : (
+                table.getRowModel().rows.map((row) => (
+                  <div
+                    key={row.id}
+                    className="grid w-full border-b border-gray-800 hover:bg-gray-800 transition-colors"
+                    style={{
+                      gridTemplateColumns: gridTemplateColumns,
+                    }}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <div
+                        key={cell.id}
+                        className="px-3 py-4 min-w-0 flex items-center"
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Pagination */}
-      <div className="border-t border-gray-700 px-4 py-3 flex items-center justify-between">
+      <div className="border-t shrink-0 border-gray-700 px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="text-sm text-gray-300">
             Showing{" "}

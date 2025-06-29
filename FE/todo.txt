@@ -1,1 +1,1 @@
-update buttons to use new cycle hooks
+Maybe on click on certain cells it pops up the value if its overflowed like notes

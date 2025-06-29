@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { ReceivedJobApplicationInfo } from "types/JobApplication";
 import { BentoContainer } from "../shared/BentoContainer";
-import JobApplicationsDataGrid from "../JobApplicationsDataGrid";
+import JobApplicationsTable from "../JobApplicationsTable";
 import { DeleteDialog } from "../dialogs/DeleteDialog";
 import { EditJobApplicationDialog } from "../dialogs/EditJobApplicationDialog";
 import type { EditJobApplication } from "types/EditJobApplication";
@@ -64,7 +64,7 @@ export const TableWrapper = ({ data = [] }: ITableWrapper) => {
         <p className="text-2xl text-[#00d4ff] font-bold mb-4">
           Job Applications
         </p>
-        <JobApplicationsDataGrid
+        <JobApplicationsTable
           data={data}
           onEdit={handleEdit}
           onDelete={handleDelete}
