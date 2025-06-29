@@ -11,7 +11,7 @@ export const Login = () => {
           </div>
         </div>
         <div className="flex flex-1 items-center justify-center">
-          <div className="w-full max-w-sm">
+          <div className="w-full max-w-md box-border p-6 border-[1px] border-[#1e1e1e] rounded-2xl">
             <LoginForm />
           </div>
         </div>
