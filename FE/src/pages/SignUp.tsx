@@ -3,7 +3,7 @@ import { ScanText } from "lucide-react";
 
 export const SignUp = () => {
   return (
-    <div className="grid min-h-svh lg:grid-cols-2 bg-gray-950">
+    <div className="grid min-h-svh bg-gray-950 lg:grid-cols-2">
       <div className="flex flex-col gap-4 p-6 md:p-10">
         <div className="flex justify-center gap-2 md:justify-start">
           <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
@@ -16,12 +16,24 @@ export const SignUp = () => {
           </div>
         </div>
       </div>
-      <div className="bg-muted relative hidden lg:block">
-        <img
-          src="/login-placeholder.jpg"
-          alt="Image"
-          className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-        />
+      <div className="bg-gray-950 relative hidden lg:block p-12 box-border">
+        <div className="bg-[#00d4ff] w-full h-full rounded-2xl flex flex-col justify-center items-center">
+          <p className="text-[40px] leading-[1.2] font-extrabold mb-8 w-[85%] text-center text-black">
+            See how easy it is to track your applications
+          </p>
+          <p className="text-[30px] leading-[1.2] font-semibold mb-16 w-[85%] text-center text-[#1e1e1e]">No more filling in forms or spreadsheet columns</p>
+          <div className="w-[85%] relative">
+            <video
+              src="/SSAutoDashboardVideoDemo.mp4"
+              muted
+              loop
+              playsInline
+              autoPlay
+              controls
+              className="w-full h-auto rounded-lg"
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

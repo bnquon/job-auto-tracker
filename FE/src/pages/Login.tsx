@@ -16,12 +16,25 @@ export const Login = () => {
           </div>
         </div>
       </div>
-      <div className="bg-muted relative hidden lg:block">
-        <img
-          src="/login-placeholder.jpg"
-          alt="Image"
-          className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-        />
+      <div className="bg-gray-950 relative hidden lg:block p-12 box-border">
+        <div className="bg-[#00d4ff] w-full h-full rounded-2xl flex flex-col justify-center items-center">
+          <p className="text-[40px] leading-[1.2] font-extrabold mb-28 w-[85%] text-center text-black">
+            Easily track your job applications by uploading an image of the job
+            posting and we'll do the rest
+          </p>
+          <div className="w-[85%] relative">
+            <img
+              className="w-[80%] h-[95%] rounded-3xl overflow-hidden"
+              src="/demoDashboard.png"
+              alt="Dashboard Demo Image"
+            />
+            <img
+              src="/demoPieChart.png"
+              alt="Pie Chart Demo Image"
+              className="absolute top-[-12%] right-0 w-[40%] rounded-3xl overflow-hidden"
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
