@@ -10,14 +10,12 @@ class UserCreateStandard(UserBase):
   class Config:
     from_attributes = True
   
-class UserCreateOauth(UserBase):
-  oauth_provider: str
-  oauth_sub: str
+# class UserCreateOauth(UserBase):
+#   oauth_provider: str
+#   oauth_sub: str
   
-class UserResponse(UserBase):
-  id: int
-  oauth_provider: Optional[str] = None
-  oauth_sub: Optional[str] = None
+# class UserResponse(UserBase):
+#   id: int
 
-  class Config:
-      from_attributes = True
+#   class Config:
+#       from_attributes = True
