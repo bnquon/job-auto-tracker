@@ -6,8 +6,8 @@ export const Login = () => {
     <div className="grid min-h-svh bg-gray-950 lg:grid-cols-2">
       <div className="flex flex-col gap-4 p-6 md:p-10">
         <div className="flex justify-center gap-2 md:justify-start">
-          <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
-            <ScanText className="size-4" color="#00d4ff" />
+          <div className="bg-primary text-primary-foreground flex size-12 items-center justify-center rounded-md">
+            <ScanText className="size-8" color="#00d4ff" />
           </div>
         </div>
         <div className="flex flex-1 items-center justify-center">
