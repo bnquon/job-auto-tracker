@@ -51,7 +51,6 @@ export function getStatusCounts({ data }: ICountingHelper) {
 }
 
 export function getLast7DaysData({ data }: ICountingHelper) {
-  console.log(data);
   if (!data) return [];
 
   const last7Days = Array.from({ length: 7 }, (_, i) => {

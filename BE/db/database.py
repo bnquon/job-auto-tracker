@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-DATABASE_URL = os.getenv("DB_CONNECTION_STRING")
+DATABASE_URL = os.getenv("PROD_DB_CONNECTION_STRING")
 if not DATABASE_URL:
   raise ValueError("DB_CONNECTION_STRING is not set")
 
@@ -17,8 +17,8 @@ Base = declarative_base()
 def get_db():
   db = SessionLocal()
   try:
-      yield db
+    yield db
   finally:
-      db.close()
+    db.close()
 
 Base.metadata.create_all(bind=engine)

@@ -7,5 +7,3 @@ class User(Base):
   email = Column(String, unique=True, nullable=False)
   password = Column(String, nullable=True) # Oauth users will be null
   username = Column(String, nullable=True)
-  oauth_provider = Column(String, nullable=True)
-  oauth_sub = Column(String, nullable=True)

@@ -17,7 +17,7 @@ class JobApplication(Base):
   cycle_id = Column(Integer, ForeignKey("job_cycles.id", ondelete="CASCADE"), nullable=False)
   company_name = Column(String, nullable=False)
   title = Column(String, nullable=False)
-  link = Column(String, nullable=False)
+  link = Column(String, nullable=True)
   status = Column(String, nullable=True)
   notes = Column(String, nullable=True)
   updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now()) # will be used to calculate 2 week auto ghosting
