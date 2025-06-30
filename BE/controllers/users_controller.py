@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, status, Response
+from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 from schemas.users_schema import UserCreateStandard
 from services.users_service import create_user_standard, login_user_standard
@@ -10,22 +10,14 @@ router = APIRouter(
   tags=["users"],
 )
 
-def set_auth_cookie(response: Response, token: str):
-  """Helper function to set authentication cookie with all required attributes"""
-  response.set_cookie(
-    key="token",
-    value=token,
-    samesite="none",    # Allow cross-site cookies
-    secure=False,       # Allow over HTTP (for development)
-    httponly=True,      # Prevent JavaScript access (security)
-    max_age=3600
-  )
-
 @router.post("/standard", status_code=status.HTTP_201_CREATED)
-def create_user_standard_route(user: UserCreateStandard, response: Response, db: Session = Depends(get_db)):
+def create_user_standard_route(user: UserCreateStandard, db: Session = Depends(get_db)):
   token = create_user_standard(db, user)
-  set_auth_cookie(response, token)
-  return {"message": "User created successfully"}
+  return {
+    "message": "Signup successful",
+    "access_token": token,
+    "token_type": "bearer"
+    }
 
 # @router.post("/oauth")
 # def create_user_oauth_route(user: UserCreateOauth, response: Response, db: Session = Depends(get_db)):
@@ -35,17 +27,14 @@ def create_user_standard_route(user: UserCreateStandard, response: Response, db:
 #     return {"message": "OAuth login successful"}
 
 @router.post("/login", status_code=status.HTTP_200_OK)
-def login_user_standard_route(user: UserCreateStandard, response: Response, db: Session = Depends(get_db)):
+def login_user_standard_route(user: UserCreateStandard, db: Session = Depends(get_db)):
   token = login_user_standard(db, user)
-  set_auth_cookie(response, token)
-  return {"message": "Login successful"}
+  return {
+    "message": "Login successful",
+    "access_token": token,
+    "token_type": "bearer"
+    }
 
 @router.post("/logout", status_code=status.HTTP_200_OK)
-def logout_user_route(response: Response):
-  response.delete_cookie(
-    key="token",
-    httponly=False,  # Set this to True in production
-    samesite="none",
-    secure=True,
-  )
-  return {"message": "Logout successful"}
+def logout_user_route():
+  return {"message": "Logged out"}

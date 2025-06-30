@@ -15,27 +15,31 @@ def create_job_application(db: Session, job_application: JobApplicationCreate, u
   return job_application_repository.create_job_application(db, job_application_create)
 
 def extract_job_application_info(job_application_image: UploadFile) -> str:
-  # validate user?
-  if job_application_image.content_type not in ["image/jpeg", "image/png"]:
-    raise ValueError("Invalid file type")
+  # Validate file type
+  if job_application_image.content_type not in ["image/jpeg", "image/png", "image/jpg"]:
+    raise ValueError("Invalid file type. Only JPEG and PNG are supported.")
   
   if not job_application_image:
     raise ValueError("No file received")
-  
-  if job_application_image.size is not None and job_application_image.size > 5 * 1024 * 512:
-    raise ValueError("File too large")
-  
-  extracted_text = extract_text_from_image(job_application_image)
-  
-  if not extracted_text:
-    raise ValueError("Could not extract text from image")
-  
-  extracted_job_info_str = get_job_info_from_text(extracted_text)
 
-  if extracted_job_info_str is None:
-    raise ValueError("No extracted job info returned")
-  
-  return extracted_job_info_str
+  # Check file size (5MB limit)
+  if job_application_image.size is not None and job_application_image.size > 5 * 1024 * 1024:
+    raise ValueError("File too large. Maximum size is 5MB.")
+
+  try:
+    extracted_text = extract_text_from_image(job_application_image)
+    
+    if not extracted_text.strip():
+      raise ValueError("Could not extract text from image")
+    
+    extracted_job_info_str = get_job_info_from_text(extracted_text)
+    if extracted_job_info_str is None:
+      raise ValueError("No job information could be extracted from the text")
+
+    return extracted_job_info_str
+
+  except Exception as e:
+    raise ValueError(f"Error processing image: {str(e)}")
 
 def delete_job_application(db: Session, job_application_id: int, user_id: int) -> None:
   deleted = job_application_repository.delete_job_application(db, job_application_id, user_id)

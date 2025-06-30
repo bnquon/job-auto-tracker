@@ -3,24 +3,14 @@ import { Login } from "./pages/Login";
 import { SignUp } from "./pages/SignUp";
 import { JobDashboard } from "./pages/JobDashboard";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { AuthContext } from "./context/AuthContext";
-import { useContext } from "react";
-import { AuthProvider } from "./context/AuthProvider";
 import { SidebarProvider } from "./components/ui/sidebar";
 import { Toaster } from "sonner";
+import { AuthProvider, useAuth } from "./context/Auth";
 
 const queryClient = new QueryClient();
 
 function AppRoutes() {
-  const auth = useContext(AuthContext);
-
-  if (!auth) {
-    return null;
-  }
-
-  const { isAuthenticated, loading } = auth;
-  if (loading) return null;
-
+  const { isAuthenticated } = useAuth();
   return (
     <Routes>
       <Route

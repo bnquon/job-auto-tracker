@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { MoreHorizontal, LogOut, Edit2, Trash2, Plus } from "lucide-react";
 import {
   Sidebar,
@@ -18,13 +18,15 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { AuthContext } from "./context/AuthContext";
 import type { JobCycleResponse } from "types/JobCycle";
 import { useDeleteJobCycle } from "./hooks/useDeleteJobCycle";
 import { useAddJobCycle } from "./hooks/useAddJobCycle";
 import { useEditJobCycle } from "./hooks/useEditJobCycle";
 import { DeleteDialog } from "./components/dialogs/DeleteDialog";
 import { toast } from "sonner";
+import { api } from "./utils/axios";
+import { useAuth } from "./context/Auth";
+import { useNavigate } from "react-router-dom";
 
 interface AppSidebarProps {
   cycles: JobCycleResponse[];
@@ -37,7 +39,6 @@ export default function AppSidebar({
   activeCycleId,
   setActiveCycleId,
 }: AppSidebarProps) {
-  const auth = useContext(AuthContext);
   const { mutate: deleteJobCycle, isPending: isDeleting } = useDeleteJobCycle();
   const { mutate: addCycle } = useAddJobCycle();
   const { mutate: renameCycle } = useEditJobCycle();
@@ -48,6 +49,9 @@ export default function AppSidebar({
   const [cycleToDelete, setCycleToDelete] = useState<JobCycleResponse | null>(
     null
   );
+
+  const { logout } = useAuth();
+  const navigate = useNavigate();
 
   const handleAddCycle = () => {
     addCycle({ name: "New Cycle" });
@@ -89,9 +93,15 @@ export default function AppSidebar({
     setActiveCycleId(id);
   };
 
-  // SIGN OUT FUNCTION
-  const handleSignOut = () => {
-    auth!.logout();
+  const handleSignOut = async () => {
+    try {
+      await api.post("/users/logout");
+    } catch (err) {
+      console.error("Logout error:", err);
+    } finally {
+      logout();
+      navigate("/", { replace: true });
+    }
   };
 
   return (

@@ -1,14 +1,14 @@
-from fastapi import Depends, HTTPException, Request
+from fastapi import Depends, HTTPException, Header
 from jwt import ExpiredSignatureError, InvalidTokenError
 from auth.jwt import decode_jwt_token
 
-def read_token_from_cookie(request: Request) -> str:
-    token = request.cookies.get("token")
-    if not token:
-        raise HTTPException(status_code=401, detail="Authentication token not found")
-    return token
+def read_token_from_header(authorization: str = Header(...)) -> str:
+  if not authorization.startswith("Bearer "):
+    raise HTTPException(status_code=401, detail="Invalid auth header")
 
-def get_current_user_id(token: str = Depends(read_token_from_cookie)) -> int:
+  return authorization.split(" ")[1]
+
+def get_current_user_id(token: str = Depends(read_token_from_header)) -> int:
     try:
         payload = decode_jwt_token(token)
         return payload["user_id"]

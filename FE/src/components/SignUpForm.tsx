@@ -8,15 +8,13 @@ import { LoginAndSignupHelper } from "../../helpers/LoginAndSignupHelper";
 import { useNavigate } from "react-router";
 import { SignUpSchema } from "../../schemas/SignUpSchema";
 import type { SignUpData } from "../../types/SignUpData";
-import { AuthContext } from "@/context/AuthContext";
-import { useContext } from "react";
 import { toast } from "sonner";
+import { useAuth } from "@/context/Auth";
 
 export function SignUpForm({
   className,
   ...props
 }: React.ComponentProps<"form">) {
-  const auth = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -26,16 +24,13 @@ export function SignUpForm({
     mode: "onSubmit",
   });
 
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   async function handleSignUp(formData: SignUpData) {
-    if (
-      await LoginAndSignupHelper(
-        { email: formData.email, password: formData.password },
-        "/users/standard"
-      )
-    ) {
-      auth?.checkAuth();
+    const token = await LoginAndSignupHelper(formData, "/users/login");
+    if (token) {
+      login(token);
       navigate("/app");
     } else {
       toast.error("Sign up failed");
