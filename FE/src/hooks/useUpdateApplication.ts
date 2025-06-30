@@ -20,5 +20,8 @@ export function useUpdateApplication() {
       });
       toast.success("Application updated");
     },
+    onError: () => {
+      toast.error("Failed to update application");
+    },
   });
 }
