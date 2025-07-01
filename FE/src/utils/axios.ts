@@ -8,6 +8,11 @@ const apiClient = axios.create({
 
 apiClient.interceptors.request.use(
   (config) => {
+    console.log(
+      "Making request to:",
+      (config.baseURL || "") + (config.url || "")
+    );
+
     const token = tokenManager.getToken();
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
