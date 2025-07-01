@@ -7,8 +7,12 @@ import type { EditJobApplication } from "types/EditJobApplication";
 import type { ManualJobApplicationObject } from "types/ManualJobApplication";
 
 export async function getJobApplicationsByCycle(
-  jobCycleId: number
+  jobCycleId: number | undefined
 ): Promise<ReceivedJobApplicationInfo[]> {
+  if (!jobCycleId) {
+    return [];
+  }
+  
   const { data } = await api.get(`job_applications/by_cycle/${jobCycleId}`);
   return data;
 }

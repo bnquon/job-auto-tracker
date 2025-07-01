@@ -17,13 +17,17 @@ import Loading from "@/components/Loading";
 
 export const JobDashboard = () => {
   const { data: cycles = [], isLoading: cyclesLoading } = useJobCycle();
-  const [activeCycleId, setActiveCycleId] = useState<number>(cycles[0]?.id);
+  const [activeCycleId, setActiveCycleId] = useState<number | null>(null);
 
   useEffect(() => {
-    setActiveCycleId(cycles[0]?.id);
-  }, [cycles]);
+    if (cycles.length > 0 && activeCycleId === null) {
+      setActiveCycleId(cycles[0].id);
+    }
+  }, [cycles, activeCycleId]);
 
-  const { data, isLoading } = useJobApplicationsByCycle(activeCycleId);
+  const { data, isLoading } = useJobApplicationsByCycle(
+    activeCycleId || undefined
+  );
   const { numActive, numTotal, numResponseRate } = useMemo(
     () => countingHelper({ data }),
     [data]
@@ -31,7 +35,7 @@ export const JobDashboard = () => {
   const pieChartData = useMemo(() => getStatusCounts({ data }), [data]);
   const lineChartData = useMemo(() => getLast7DaysData({ data }), [data]);
 
-  if (cyclesLoading || isLoading) {
+  if (cyclesLoading || isLoading || activeCycleId === null) {
     return (
       <div className="w-full h-screen bg-gray-950">
         <Loading />
