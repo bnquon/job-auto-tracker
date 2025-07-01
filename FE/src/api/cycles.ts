@@ -12,6 +12,7 @@ export async function getAllJobCycles(): Promise<JobCycleResponse[]> {
       Pragma: "no-cache",
     },
   });
+  console.log("api get all cycles", data);
   return data;
 }
 
