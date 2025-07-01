@@ -6,12 +6,7 @@ import type {
 } from "types/JobCycle";
 
 export async function getAllJobCycles(): Promise<JobCycleResponse[]> {
-  const { data } = await api.get("job_cycles", {
-    headers: {
-      "Cache-Control": "no-cache",
-      Pragma: "no-cache",
-    },
-  });
+  const { data } = await api.get("job_cycles/");
   console.log("api get all cycles", data);
   return data;
 }
