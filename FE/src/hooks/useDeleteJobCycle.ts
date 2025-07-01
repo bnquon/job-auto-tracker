@@ -9,7 +9,7 @@ export const useDeleteJobCycle = () => {
     mutationFn: deleteJobCycle,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["jobCycle"],
+        queryKey: ["jobCycle", "applications"],
       });
       toast.success("Cycle deleted");
     },
