@@ -51,7 +51,7 @@ export default function AppSidebar({
     null
   );
 
-  console.log(Array.isArray(cycles));
+  const safeCycles = Array.isArray(cycles) ? cycles : [];
 
   const { logout } = useAuth();
   const navigate = useNavigate();
@@ -132,7 +132,7 @@ export default function AppSidebar({
           <SidebarGroup className="flex-1 overflow-hidden">
             <SidebarGroupContent className="h-full overflow-y-auto">
               <SidebarMenu>
-                {cycles.map((cycle: JobCycleResponse) => (
+                {safeCycles.map((cycle: JobCycleResponse) => (
                   <SidebarMenuItem key={cycle.id}>
                     <div className="flex items-center w-full group">
                       {editingId === cycle.id ? (
