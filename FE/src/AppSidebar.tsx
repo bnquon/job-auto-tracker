@@ -36,7 +36,7 @@ interface AppSidebarProps {
 }
 
 export default function AppSidebar({
-  cycles,
+  cycles = [],
   activeCycleId,
   setActiveCycleId,
 }: AppSidebarProps) {
@@ -50,6 +50,8 @@ export default function AppSidebar({
   const [cycleToDelete, setCycleToDelete] = useState<JobCycleResponse | null>(
     null
   );
+
+  console.log(Array.isArray(cycles));
 
   const { logout } = useAuth();
   const navigate = useNavigate();
