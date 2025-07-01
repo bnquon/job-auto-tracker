@@ -52,7 +52,6 @@ export default function AppSidebar({
   );
 
   const safeCycles = Array.isArray(cycles) ? cycles : [];
-  console.log("safecycles in sidebar", safeCycles);
 
   const { logout } = useAuth();
   const navigate = useNavigate();

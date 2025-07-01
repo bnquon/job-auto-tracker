@@ -7,7 +7,6 @@ import type {
 
 export async function getAllJobCycles(): Promise<JobCycleResponse[]> {
   const { data } = await api.get("job_cycles/");
-  console.log("api get all cycles", data);
   return data;
 }
 
@@ -25,6 +24,6 @@ export async function deleteJobCycle(jobCycleId: number) {
 }
 
 export async function addJobCycle(newJobCycle: CreateJobCycle) {
-  const { data } = await api.post("job_cycles", newJobCycle);
+  const { data } = await api.post("job_cycle/", newJobCycle);
   return data;
 }

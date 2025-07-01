@@ -23,7 +23,6 @@ export const JobDashboard = () => {
     if (cycles.length > 0 && activeCycleId === null) {
       setActiveCycleId(cycles[0].id);
     }
-    console.log("cycles in job dashboard", cycles);
   }, [cycles, activeCycleId]);
 
   const { data, isLoading } = useJobApplicationsByCycle(
