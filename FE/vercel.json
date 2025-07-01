@@ -9,8 +9,12 @@
       "destination": "http://35.164.230.188/job_applications/$1"
     },
     {
+      "source": "/job_cycles",
+      "destination": "http://35.164.230.188/job_cycles"
+    },
+    {
       "source": "/job_cycles/(.*)",
-      "destination": "http://35.164.230.188/job_cycle/$1"
+      "destination": "http://35.164.230.188/job_cycles/$1"
     },
     {
       "source": "/(.*)",
