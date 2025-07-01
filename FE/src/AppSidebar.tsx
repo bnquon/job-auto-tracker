@@ -63,7 +63,18 @@ export default function AppSidebar({
     if (cycles.length < 2) {
       return toast.warning("You must have at least one remaining cycle");
     }
-    deleteJobCycle(cycleToDelete!.id);
+    const deletedId = cycleToDelete!.id;
+
+    deleteJobCycle(deletedId, {
+      onSuccess: () => {
+        if (deletedId === activeCycleId) {
+          const remainingCycles = cycles.filter((c) => c.id !== deletedId);
+          if (remainingCycles.length > 0) {
+            setActiveCycleId(remainingCycles[0].id);
+          }
+        }
+      },
+    });
   };
 
   // RENAME CYCLE FUNCTIONS
@@ -239,14 +250,10 @@ export default function AppSidebar({
           description="Are you sure you want to delete this cycle? It will delete all jobs tracked in the cycle as well."
         />
       )}
-      
-      {isDeleting && (
-        <Loading loadingText="Deleting job cycle"/>
-      )}
 
-      {isRenaming && (
-        <Loading loadingText="Renaming job cycle"/>
-      )}
+      {isDeleting && <Loading loadingText="Deleting job cycle" />}
+
+      {isRenaming && <Loading loadingText="Renaming job cycle" />}
     </>
   );
 }
