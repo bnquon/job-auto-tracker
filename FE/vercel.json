@@ -5,6 +5,10 @@
       "destination": "http://35.164.230.188/$1"
     },
     {
+      "source": "/api",
+      "destination": "http://35.164.230.188/"
+    },
+    {
       "source": "/(.*)",
       "destination": "/"
     }
