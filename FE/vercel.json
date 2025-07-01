@@ -2,19 +2,19 @@
   "rewrites": [
     {
       "source": "/users/(.*)",
-      "destination": "${process.env.BACKEND_URL}/users/$1"
+      "destination": "http://35.164.230.188/users/$1"
     },
     {
       "source": "/job_applications/(.*)",
-      "destination": "${process.env.BACKEND_URL}/job_applications/$1"
+      "destination": "http://35.164.230.188/job_applications/$1"
     },
     {
       "source": "/job_cycles",
-      "destination": "${process.env.BACKEND_URL}/job_cycles"
+      "destination": "http://35.164.230.188/job_cycles"
     },
     {
       "source": "/job_cycles/(.*)",
-      "destination": "${process.env.BACKEND_URL}/job_cycles/$1"
+      "destination": "http://35.164.230.188/job_cycles/$1"
     },
     {
       "source": "/(.*)",
