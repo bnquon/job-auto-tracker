@@ -25,11 +25,11 @@ export const Login = () => {
           <div className="w-[85%] relative">
             <img
               className="w-[80%] h-[95%] rounded-3xl overflow-hidden"
-              src="/demoDashboard.png"
+              src="/demoDashboard.webp"
               alt="Dashboard Demo Image"
             />
             <img
-              src="/demoPieChart.png"
+              src="/demoPieChart.webp"
               alt="Pie Chart Demo Image"
               className="absolute top-[-12%] right-0 w-[40%] rounded-3xl overflow-hidden"
             />
@@ -39,3 +39,5 @@ export const Login = () => {
     </div>
   );
 };
+
+export default Login;

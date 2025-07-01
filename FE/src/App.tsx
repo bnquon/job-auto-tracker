@@ -1,13 +1,15 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { Login } from "./pages/Login";
-import { SignUp } from "./pages/SignUp";
 import { JobDashboard } from "./pages/JobDashboard";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SidebarProvider } from "./components/ui/sidebar";
 import { Toaster } from "sonner";
 import { AuthProvider, useAuth } from "./context/Auth";
+import React from "react";
 
 const queryClient = new QueryClient();
+
+const LoginPage = React.lazy(() => import('../src/pages/Login'));
+const SignUpPage = React.lazy(() => import('../src/pages/SignUp'));
 
 function AppRoutes() {
   const { isAuthenticated } = useAuth();
@@ -15,11 +17,11 @@ function AppRoutes() {
     <Routes>
       <Route
         path="/"
-        element={isAuthenticated ? <Navigate to="/app" replace /> : <Login />}
+        element={isAuthenticated ? <Navigate to="/app" replace /> : <LoginPage />}
       />
       <Route
         path="/signup"
-        element={isAuthenticated ? <Navigate to="/app" replace /> : <SignUp />}
+        element={isAuthenticated ? <Navigate to="/app" replace /> : <SignUpPage />}
       />
       <Route
         path="/app"
