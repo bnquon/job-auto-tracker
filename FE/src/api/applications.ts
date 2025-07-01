@@ -12,7 +12,7 @@ export async function getJobApplicationsByCycle(
   if (!jobCycleId) {
     return [];
   }
-  
+
   const { data } = await api.get(`job_applications/by_cycle/${jobCycleId}`);
   return data;
 }
@@ -36,12 +36,11 @@ export async function extractInfo(
   const formData = new FormData();
   formData.append("job_application_image", applicationImage);
 
-  // Remove the explicit Content-Type header - let browser set it
   const { data } = await api.post("job_applications/extract", formData);
   return data;
 }
 
 export async function addApplication(newJobInfo: ManualJobApplicationObject) {
-  const { data } = await api.post("job_applications", newJobInfo);
+  const { data } = await api.post("job_applications/", newJobInfo);
   return data;
 }
