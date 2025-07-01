@@ -1,9 +1,7 @@
-import { tokenManager } from "@/utils/auth";
 import { api } from "@/utils/axios";
 import type { CreateJobCycle, JobCycleResponse, UpdateJobCycle } from "types/JobCycle";
 
 export async function getAllJobCycles(): Promise<JobCycleResponse[]> {
-  console.log("Token:", tokenManager.getToken());
   const { data } = await api.get("/job_cycles/");
   return data;
 }
