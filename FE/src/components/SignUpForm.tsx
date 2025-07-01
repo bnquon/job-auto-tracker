@@ -28,7 +28,7 @@ export function SignUpForm({
   const navigate = useNavigate();
 
   async function handleSignUp(formData: SignUpData) {
-    const token = await LoginAndSignupHelper(formData, "users/standard/");
+    const token = await LoginAndSignupHelper(formData, "users/standard");
     if (token) {
       login(token);
       navigate("/app");

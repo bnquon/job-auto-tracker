@@ -1,16 +1,16 @@
 {
   "rewrites": [
     {
-      "source": "/users/:path(.*)",
-      "destination": "http://35.164.230.188/users/:path"
+      "source": "/users/(.*)",
+      "destination": "http://35.164.230.188/users/$1"
     },
     {
-      "source": "/job_applications/:path(.*)",
-      "destination": "http://35.164.230.188/job_applications/:path"
+      "source": "/job_applications/(.*)",
+      "destination": "http://35.164.230.188/job_applications/$1"
     },
     {
-      "source": "/job_cycle/:path(.*)",
-      "destination": "http://35.164.230.188/job_cycle/:path"
+      "source": "/job_cycle/(.*)",
+      "destination": "http://35.164.230.188/job_cycle/$1"
     },
     {
       "source": "/(.*)",
