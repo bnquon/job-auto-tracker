@@ -28,6 +28,7 @@ export const JobDashboard = () => {
   const { data, isLoading } = useJobApplicationsByCycle(
     activeCycleId || undefined
   );
+
   const { numActive, numTotal, numResponseRate } = useMemo(
     () => countingHelper({ data }),
     [data]

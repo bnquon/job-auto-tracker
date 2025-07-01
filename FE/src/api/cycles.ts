@@ -24,6 +24,6 @@ export async function deleteJobCycle(jobCycleId: number) {
 }
 
 export async function addJobCycle(newJobCycle: CreateJobCycle) {
-  const { data } = await api.post("job_cycle/", newJobCycle);
+  const { data } = await api.post("job_cycles/", newJobCycle);
   return data;
 }
