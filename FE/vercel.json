@@ -1,12 +1,16 @@
 {
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": "http://35.164.230.188/$1"
+      "source": "/users/:path(.*)",
+      "destination": "http://35.164.230.188/users/:path"
     },
     {
-      "source": "/api",
-      "destination": "http://35.164.230.188/"
+      "source": "/job_applications/:path(.*)",
+      "destination": "http://35.164.230.188/job_applications/:path"
+    },
+    {
+      "source": "/job_cycle/:path(.*)",
+      "destination": "http://35.164.230.188/job_cycle/:path"
     },
     {
       "source": "/(.*)",

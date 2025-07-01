@@ -2,7 +2,7 @@ import axios from "axios";
 import { tokenManager } from "../utils/auth";
 
 const apiClient = axios.create({
-  baseURL: "/api",
+  baseURL: "/",
   timeout: 10000,
 });
 
