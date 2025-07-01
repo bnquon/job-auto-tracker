@@ -9,7 +9,7 @@
       "destination": "http://35.164.230.188/job_applications/$1"
     },
     {
-      "source": "/job_cycle/(.*)",
+      "source": "/job_cycles/(.*)",
       "destination": "http://35.164.230.188/job_cycle/$1"
     },
     {
