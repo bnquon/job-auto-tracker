@@ -1,4 +1,9 @@
-# Job Dashboard
+**NOTE: backend must be running on EC2 for full functionality**
+
+## Demo
+
+Check out the dashboard in action:  
+[Watch the demo video](https://streamable.com/1kjhob)
 
 Never fill out another spreadsheet to keep track of your jobs, upload a screenshot and extract job info automatically! 
 This is a job tracking dashboard with JWT token authentication and Notion-style tabs to manage multiple job cycles easily. Visualize your job applications with graphs and stay organized!
@@ -20,8 +25,3 @@ This is a job tracking dashboard with JWT token authentication and Notion-style 
 - Frontend deployed on Vercel (note: backend must be running on EC2 for full functionality)  
 - Optimized images and video assets for performance  
 - Implemented a reverse proxy on frontend to bypass HTTP/HTTPS mismatch  
-
-## Demo
-
-Check out the dashboard in action:  
-[Watch the demo video](https://streamable.com/1kjhob)
