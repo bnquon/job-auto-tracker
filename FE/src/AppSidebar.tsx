@@ -27,6 +27,7 @@ import { toast } from "sonner";
 import { api } from "./utils/axios";
 import { useAuth } from "./context/Auth";
 import { useNavigate } from "react-router-dom";
+import Loading from "./components/Loading";
 
 interface AppSidebarProps {
   cycles: JobCycleResponse[];
@@ -41,7 +42,7 @@ export default function AppSidebar({
 }: AppSidebarProps) {
   const { mutate: deleteJobCycle, isPending: isDeleting } = useDeleteJobCycle();
   const { mutate: addCycle } = useAddJobCycle();
-  const { mutate: renameCycle } = useEditJobCycle();
+  const { mutate: renameCycle, isPending: isRenaming } = useEditJobCycle();
 
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editingTitle, setEditingTitle] = useState("");
@@ -236,8 +237,15 @@ export default function AppSidebar({
           onConfirm={handleDeleteCycle}
           title="Delete Cycle"
           description="Are you sure you want to delete this cycle? It will delete all jobs tracked in the cycle as well."
-          isPending={isDeleting}
         />
+      )}
+      
+      {isDeleting && (
+        <Loading loadingText="Deleting job cycle"/>
+      )}
+
+      {isRenaming && (
+        <Loading loadingText="Renaming job cycle"/>
       )}
     </>
   );

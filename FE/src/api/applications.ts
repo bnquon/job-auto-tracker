@@ -38,6 +38,6 @@ export async function extractInfo(
 }
 
 export async function addApplication(newJobInfo: ManualJobApplicationObject) {
-  const { data } = await api.post("/job_applications", newJobInfo);
+  const { data } = await api.post("/job_applications/", newJobInfo);
   return data;
 }

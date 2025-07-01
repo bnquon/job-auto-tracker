@@ -17,7 +17,7 @@ interface DeleteDialogProps {
   title: string;
   description: ReactNode;
   confirmText?: string;
-  isPending: boolean;
+  isPending?: boolean;
 }
 
 export function DeleteDialog({
@@ -27,7 +27,7 @@ export function DeleteDialog({
   title,
   description,
   confirmText = "Delete",
-  isPending,
+  isPending = false,
 }: DeleteDialogProps) {
   const handleConfirm = () => {
     onConfirm();

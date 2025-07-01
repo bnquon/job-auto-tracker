@@ -1,8 +1,10 @@
+import { tokenManager } from "@/utils/auth";
 import { api } from "@/utils/axios";
 import type { CreateJobCycle, JobCycleResponse, UpdateJobCycle } from "types/JobCycle";
 
 export async function getAllJobCycles(): Promise<JobCycleResponse[]> {
-  const { data } = await api.get("/job_cycles");
+  console.log("Token:", tokenManager.getToken());
+  const { data } = await api.get("/job_cycles/");
   return data;
 }
 
@@ -17,6 +19,6 @@ export async function deleteJobCycle(jobCycleId: number) {
 }
 
 export async function addJobCycle(newJobCycle: CreateJobCycle) {
-  const { data } = await api.post("/job_cycles", newJobCycle);
+  const { data } = await api.post("/job_cycles/", newJobCycle);
   return data;
 }

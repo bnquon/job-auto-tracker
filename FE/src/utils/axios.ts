@@ -2,16 +2,21 @@ import axios from "axios";
 import { tokenManager } from "../utils/auth";
 
 const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_BACKEND_URL,
+  baseURL: "/api",
   timeout: 10000,
 });
 
 apiClient.interceptors.request.use(
   (config) => {
     const token = tokenManager.getToken();
+    console.log("Interceptor - Token:", token); // Debug line
+    console.log("Interceptor - Config headers before:", config.headers); // Debug line
+
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+
+    console.log("Interceptor - Config headers after:", config.headers); // Debug line
     return config;
   },
   (error) => {
