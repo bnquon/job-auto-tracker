@@ -57,7 +57,7 @@ export const JobDashboard = () => {
 
       {/* Main Content */}
       <div className="flex-1 overflow-auto relative">
-        <div className="2xl:w-3/4 lg:w-4/5 mx-auto min-h-full p-6 space-y-6">
+        <div className="3xl:w-3/4 lg:w-4/5 mx-auto min-h-full p-6 space-y-6">
           {/* Overview blocks - full width of container */}
           <div className="w-full">
             <OverviewWrapper
@@ -68,17 +68,17 @@ export const JobDashboard = () => {
           </div>
 
           {/* Fixed grid layout */}
-          <div className="flex gap-6 w-full 2xl:flex-row lg:flex-col">
-            <div className="2xl:w-3/4 w-full">
+          <div className="flex gap-6 w-full 3xl:flex-row lg:flex-col">
+            <div className="3xl:w-3/4 w-full">
               <TableWrapper data={data} />
             </div>
-            <div className="flex 2xl:flex-col gap-6 w-full 2xl:max-w-1/4">
+            <div className="flex 3xl:flex-col gap-6 w-full 3xl:max-w-1/4">
               <ManualUploadWrapper currentCycleId={activeCycleId} />
               <UploadWrapper currentCycleId={activeCycleId} />
             </div>
           </div>
 
-          <div className="grid 2xl:grid-cols-2 gap-6 w-full">
+          <div className="grid 3xl:grid-cols-2 gap-6 w-full">
             <ApplicationStatusChart data={pieChartData} />
             <ApplicationsLineChart data={lineChartData} />
           </div>

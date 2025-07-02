@@ -2,7 +2,7 @@ import axios from "axios";
 import { tokenManager } from "../utils/auth";
 
 const apiClient = axios.create({
-  baseURL: "/",
+  baseURL: import.meta.env.VITE_BACKEND_URL || "/", // Use env var in dev, fallback to "/" for production
   timeout: 10000,
 });
 
