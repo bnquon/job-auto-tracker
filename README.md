@@ -1,9 +1,9 @@
 **NOTE: backend must be running on EC2 for full functionality**
 
 ## Demo
-
-Check out the dashboard in action:  
-[Watch the demo video](https://streamable.com/1kjhob)
+<p align="center" width="100%">
+<video src="https://github.com/user-attachments/assets/e6c45e08-2468-4def-90d1-102e180436df" width="80%" controls muted></video>
+</p>
 
 Never fill out another spreadsheet to keep track of your jobs, upload a screenshot and extract job info automatically! 
 This is a job tracking dashboard with JWT token authentication and Notion-style tabs to manage multiple job cycles easily. Visualize your job applications with graphs and stay organized!
